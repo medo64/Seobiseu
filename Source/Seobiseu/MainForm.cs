@@ -9,6 +9,8 @@ using System.Windows.Forms;
 namespace Seobiseu {
     internal partial class MainForm : Form {
 
+        private ManualResetEvent AllowedRefreshEvent = new ManualResetEvent(true);
+
         public MainForm() {
             InitializeComponent();
             this.Font = SystemFonts.MessageBoxFont;
@@ -69,6 +71,7 @@ namespace Seobiseu {
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
             bwServicesUpdate.CancelAsync();
+            this.AllowedRefreshEvent.Set();
         }
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e) {
@@ -196,6 +199,8 @@ namespace Seobiseu {
                     }
                 }
                 if ((newItemsToAdd.Count > 0) || (newItemsToChange.Count > 0) || (newItemsToRemove.Count > 0)) {
+                    while (this.AllowedRefreshEvent.WaitOne(100) == false) { }
+                    if (bwServicesUpdate.CancellationPending) { return; }
                     bwServicesUpdate.ReportProgress(-1, new object[] { newItemsToAdd.AsReadOnly(), newItemsToChange.AsReadOnly(), newItemsToRemove.AsReadOnly() });
                 }
 
@@ -227,8 +232,6 @@ namespace Seobiseu {
                 lsvServices.Items.Add(lvi);
             }
 
-            lsvServices.Sort();
-
             lsvServices.EndUpdate();
 
             UpdateToolbar();
@@ -256,6 +259,81 @@ namespace Seobiseu {
 
         private void lsvServices_SelectedIndexChanged(object sender, EventArgs e) {
             UpdateToolbar();
+        }
+
+        private void lsvServices_ItemDrag(object sender, ItemDragEventArgs e) {
+            this.AllowedRefreshEvent.Reset(); //to prevent updates
+            lsvServices.DoDragDrop(lsvServices.SelectedItems, DragDropEffects.Move);
+        }
+
+        private void lsvServices_DragEnter(object sender, DragEventArgs e) {
+            System.Diagnostics.Debug.WriteLine("ENTER");
+            for (int i = 0; i < e.Data.GetFormats().Length; i++) {
+                if (e.Data.GetFormats()[i].Equals("System.Windows.Forms.ListView+SelectedListViewItemCollection")) {
+                    e.Effect = DragDropEffects.Move;
+                    break;
+                }
+            }
+        }
+
+        private void lsvServices_DragDrop(object sender, DragEventArgs e) {
+            System.Diagnostics.Debug.WriteLine("DROP");
+            if (lsvServices.SelectedItems.Count == 0) {
+                this.AllowedRefreshEvent.Set();
+                return;
+            }
+
+            Point cp = lsvServices.PointToClient(new Point(e.X, e.Y));
+            ListViewItem dragToItem = lsvServices.GetItemAt(cp.X, cp.Y);
+            if (dragToItem == null) {
+                this.AllowedRefreshEvent.Set();
+                return;
+            }
+
+            int dragIndex = dragToItem.Index;
+            var sel = new ListViewItem[lsvServices.SelectedItems.Count];
+            for (int i = 0; i < lsvServices.SelectedItems.Count; i++) {
+                sel[i] = lsvServices.SelectedItems[i];
+            }
+
+            ListViewItem insertItem = null;
+            for (int i = 0; i < sel.Length; i++) {
+                var dragItem = sel[i];
+                int itemIndex = dragIndex;
+                if (itemIndex == dragItem.Index) {
+                    this.AllowedRefreshEvent.Set();
+                    return;
+                }
+
+                if (dragItem.Index < itemIndex) {
+                    itemIndex++;
+                } else {
+                    itemIndex = dragIndex + i;
+                }
+
+                insertItem = (ListViewItem)dragItem.Clone();
+                lsvServices.Items.Insert(itemIndex, insertItem);
+                lsvServices.Items.Remove(dragItem);
+            }
+
+            if (insertItem != null) {
+                insertItem.Selected = true;
+                insertItem.Focused = true;
+            }
+
+            var serviceNames = new List<string>();
+            foreach (ListViewItem item in lsvServices.Items) {
+                var serviceName = ((ServiceItem)item.Tag).ServiceName;
+                serviceNames.Add(serviceName);
+            }
+            Settings.ServiceNames = serviceNames.ToArray();
+            Tray.UpdateContextMenu();
+
+            this.AllowedRefreshEvent.Set(); //to allow updates after drag
+        }
+
+        private void lsvServices_MouseUp(object sender, MouseEventArgs e) {
+            this.AllowedRefreshEvent.Set(); //to allow updates after drag (in case that there wasn't drag)
         }
 
     }

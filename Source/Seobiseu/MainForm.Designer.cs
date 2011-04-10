@@ -51,6 +51,7 @@
             // 
             // lsvServices
             // 
+            this.lsvServices.AllowDrop = true;
             this.lsvServices.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lsvServices.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.lsvAllServices_colDisplayName});
@@ -64,11 +65,14 @@
             this.lsvServices.Name = "lsvServices";
             this.lsvServices.Size = new System.Drawing.Size(382, 228);
             this.lsvServices.SmallImageList = this.imlServiceStatus;
-            this.lsvServices.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lsvServices.TabIndex = 0;
             this.lsvServices.UseCompatibleStateImageBehavior = false;
             this.lsvServices.View = System.Windows.Forms.View.Details;
+            this.lsvServices.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.lsvServices_ItemDrag);
             this.lsvServices.SelectedIndexChanged += new System.EventHandler(this.lsvServices_SelectedIndexChanged);
+            this.lsvServices.DragDrop += new System.Windows.Forms.DragEventHandler(this.lsvServices_DragDrop);
+            this.lsvServices.DragEnter += new System.Windows.Forms.DragEventHandler(this.lsvServices_DragEnter);
+            this.lsvServices.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lsvServices_MouseUp);
             // 
             // lsvAllServices_colDisplayName
             // 

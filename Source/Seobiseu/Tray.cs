@@ -28,6 +28,7 @@ namespace Seobiseu {
 
             Tray.Notify.ContextMenuStrip = new ContextMenuStrip();
             Tray.Notify.ContextMenuStrip.Items.Add(new ToolStripMenuItem("Show", null, Menu_Show_OnClick));
+            Tray.Notify.ContextMenuStrip.Items[0].Font = new Font(Tray.Notify.ContextMenuStrip.Items[0].Font, FontStyle.Bold);
             Tray.Notify.ContextMenuStrip.Items.Add("-");
 
             bool needsSeparator = false;
@@ -133,9 +134,6 @@ namespace Seobiseu {
 
             public const UInt32 IMAGE_ICON = 1;
 
-
-            //[DllImport("user32.dll", CharSet = CharSet.Unicode)]
-            //static extern internal IntPtr LoadIcon(IntPtr hInstance, string lpIconName);
 
             [DllImport("user32.dll", CharSet = CharSet.Unicode)]
             static extern internal IntPtr LoadImage(IntPtr hInstance, String lpIconName, UInt32 uType, Int32 cxDesired, Int32 cyDesired, UInt32 fuLoad);
