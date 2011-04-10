@@ -73,6 +73,7 @@ namespace Seobiseu {
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
+            App.MainForm = null;
             bwServicesUpdate.CancelAsync();
             this.AllowedRefreshEvent.Set();
         }
@@ -82,7 +83,6 @@ namespace Seobiseu {
             Application.Exit();
 #else
             if (Settings.UseNotificationArea == false) {
-                App.MainForm = null;
                 Application.Exit();
             }
 #endif

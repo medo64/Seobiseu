@@ -6,12 +6,14 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
+using System.ComponentModel;
 
 namespace Seobiseu {
     internal static class App {
 
         private static readonly Mutex SetupMutex = new Mutex(false, @"Global\JosipMedved_Seobiseu");
         public static MainForm MainForm = null;
+        public static Form ThreadProxyForm = null;
 
 
         [STAThread]
@@ -22,6 +24,25 @@ namespace Seobiseu {
 
             Medo.Application.UnhandledCatch.ThreadException += new EventHandler<ThreadExceptionEventArgs>(UnhandledCatch_ThreadException);
             Medo.Application.UnhandledCatch.Attach();
+
+            App.ThreadProxyForm = new Form();
+            App.ThreadProxyForm.CreateControl();
+            App.ThreadProxyForm.Handle.GetType();
+
+            Medo.Application.SingleInstance.NewInstanceDetected += new EventHandler<Medo.Application.NewInstanceEventArgs>(SingleInstance_NewInstanceDetected);
+            if (Medo.Application.SingleInstance.IsOtherInstanceRunning) {
+                var currProcess = Process.GetCurrentProcess();
+                foreach (var iProcess in Process.GetProcessesByName(currProcess.ProcessName)) {
+                    try {
+                        if (iProcess.Id != currProcess.Id) {
+                            NativeMethods.AllowSetForegroundWindow(iProcess.Id);
+                            break;
+                        }
+                    } catch (Win32Exception) { }
+                }
+            }
+            Medo.Application.SingleInstance.Attach();
+
 
             if (Settings.UseNotificationArea) {
                 Tray.Show();
@@ -49,10 +70,34 @@ namespace Seobiseu {
         }
 
 
+        private static void SingleInstance_NewInstanceDetected(object sender, Medo.Application.NewInstanceEventArgs e) {
+            try {
+                NewInstanceDetectedProcDelegate method = new NewInstanceDetectedProcDelegate(NewInstanceDetectedProc);
+                App.ThreadProxyForm.Invoke(method);
+            } catch (Exception) { }
+        }
+
+        private delegate void NewInstanceDetectedProcDelegate();
+
+        private static void NewInstanceDetectedProc() {
+            if (App.MainForm == null) { App.MainForm = new MainForm(); }
+            if (App.MainForm.IsHandleCreated == false) {
+                App.MainForm.CreateControl();
+                App.MainForm.Handle.GetType();
+            }
+
+            App.MainForm.Show();
+            if (App.MainForm.WindowState == FormWindowState.Minimized) { App.MainForm.WindowState = FormWindowState.Normal; }
+            App.MainForm.Activate();
+        }
+
+
+
         private static class NativeMethods {
 
-            [DllImport("Shell32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
-            public static extern UInt32 SetCurrentProcessExplicitAppUserModelID(String AppID);
+            [DllImportAttribute("user32.dll", EntryPoint = "AllowSetForegroundWindow")]
+            [return: MarshalAsAttribute(UnmanagedType.Bool)]
+            public static extern bool AllowSetForegroundWindow(int dwProcessId);
 
         }
 
