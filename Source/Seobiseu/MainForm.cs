@@ -63,6 +63,13 @@ namespace Seobiseu {
             bwServicesUpdate.CancelAsync();
         }
 
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e) {
+            if (Settings.UseNotificationArea == false) {
+                App.MainForm = null;
+                Application.Exit();
+            }
+        }
+
         private void Form_Resize(object sender, EventArgs e) {
             lsvServices.Columns[0].Width = lsvServices.ClientSize.Width - SystemInformation.VerticalScrollBarWidth;
         }
@@ -84,7 +91,9 @@ namespace Seobiseu {
 
         private void mnuAdd_Click(object sender, EventArgs e) {
             using (var frm = new AddServiceForm()) {
-                frm.ShowDialog(this);
+                if (frm.ShowDialog(this) == DialogResult.OK) {
+                    Tray.UpdateContextMenu();
+                }
             }
         }
 
@@ -99,11 +108,14 @@ namespace Seobiseu {
                     }
                 }
                 Settings.ServiceNames = serviceNames.ToArray();
+                Tray.UpdateContextMenu();
             }
         }
 
         private void mnuOptions_Click(object sender, EventArgs e) {
-
+            using (var frm = new OptionsForm()) {
+                frm.ShowDialog(this);
+            }
         }
 
         private void mnuReportABug_Click(object sender, EventArgs e) {

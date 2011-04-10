@@ -202,7 +202,6 @@
             this.mnuOptions.Name = "mnuOptions";
             this.mnuOptions.Size = new System.Drawing.Size(23, 24);
             this.mnuOptions.Text = "Options";
-            this.mnuOptions.Visible = false;
             this.mnuOptions.Click += new System.EventHandler(this.mnuOptions_Click);
             // 
             // toolStripSeparator1
@@ -270,6 +269,7 @@
             this.Name = "MainForm";
             this.Text = "Seobiseu";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.Form_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form_KeyDown);
             this.Resize += new System.EventHandler(this.Form_Resize);

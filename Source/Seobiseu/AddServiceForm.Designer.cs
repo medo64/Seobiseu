@@ -50,7 +50,7 @@
             this.lsvServices.Size = new System.Drawing.Size(470, 300);
             this.lsvServices.SmallImageList = this.imlServiceStatus;
             this.lsvServices.Sorting = System.Windows.Forms.SortOrder.Ascending;
-            this.lsvServices.TabIndex = 1;
+            this.lsvServices.TabIndex = 0;
             this.lsvServices.UseCompatibleStateImageBehavior = false;
             this.lsvServices.View = System.Windows.Forms.View.Details;
             this.lsvServices.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.lsvServices_ItemChecked);
@@ -78,11 +78,11 @@
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOK.Enabled = false;
-            this.btnOK.Location = new System.Drawing.Point(296, 330);
+            this.btnOK.Location = new System.Drawing.Point(296, 327);
             this.btnOK.Margin = new System.Windows.Forms.Padding(3, 15, 3, 3);
             this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(90, 25);
-            this.btnOK.TabIndex = 2;
+            this.btnOK.Size = new System.Drawing.Size(90, 28);
+            this.btnOK.TabIndex = 1;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
@@ -91,11 +91,11 @@
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(392, 330);
+            this.btnCancel.Location = new System.Drawing.Point(392, 327);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(3, 15, 3, 3);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(90, 25);
-            this.btnCancel.TabIndex = 3;
+            this.btnCancel.Size = new System.Drawing.Size(90, 28);
+            this.btnCancel.TabIndex = 2;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 

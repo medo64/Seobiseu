@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading;
 using Microsoft.Win32.SafeHandles;
+using System.Security.AccessControl;
 
 internal class Transfer {
 
@@ -77,7 +78,21 @@ internal class Transfer {
 
 
     public static SafeHandleMinusOneIsInvalid Create() {
-        var handle = NativeMethods.CreateNamedPipe(Transfer.NamedPipeName, NativeMethods.PIPE_ACCESS_DUPLEX, NativeMethods.PIPE_TYPE_BYTE | NativeMethods.PIPE_READMODE_BYTE | NativeMethods.PIPE_WAIT, NativeMethods.PIPE_UNLIMITED_INSTANCES, 4096, 4096, NativeMethods.NMPWAIT_USE_DEFAULT_WAIT, System.IntPtr.Zero);
+        // Build NULL DACL (Allow everyone full access)
+        var gsd = new RawSecurityDescriptor(ControlFlags.DiscretionaryAclPresent, null, null, null, null);
+
+        // Construct SECURITY_ATTRIBUTES structure
+        var sa = new NativeMethods.SECURITY_ATTRIBUTES();
+        sa.nLength = Marshal.SizeOf(typeof(NativeMethods.SECURITY_ATTRIBUTES));
+        sa.bInheritHandle = 1;
+
+        // Get binary form of the security descriptor and copy it into place
+        byte[] desc = new byte[gsd.BinaryLength];
+        gsd.GetBinaryForm(desc, 0);
+        sa.lpSecurityDescriptor = Marshal.AllocHGlobal(desc.Length);
+        Marshal.Copy(desc, 0, sa.lpSecurityDescriptor, desc.Length);
+
+        var handle = NativeMethods.CreateNamedPipe(Transfer.NamedPipeName, NativeMethods.PIPE_ACCESS_DUPLEX, NativeMethods.PIPE_TYPE_BYTE | NativeMethods.PIPE_READMODE_BYTE | NativeMethods.PIPE_WAIT, NativeMethods.PIPE_UNLIMITED_INSTANCES, 4096, 4096, NativeMethods.NMPWAIT_USE_DEFAULT_WAIT, sa);
         if (handle.Equals(IntPtr.Zero)) { throw new Win32Exception(); }
         return handle;
     }
@@ -153,6 +168,14 @@ internal class Transfer {
         }
 
 
+        [StructLayout(LayoutKind.Sequential)]
+        public class SECURITY_ATTRIBUTES {
+            public int nLength;
+            public IntPtr lpSecurityDescriptor;
+            public int bInheritHandle;
+        }
+
+
         [DllImport("kernel32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool CancelIoEx(SafeHandle hFile, IntPtr lpOverlapped);
@@ -169,7 +192,7 @@ internal class Transfer {
         public static extern FileSafeHandle CreateFile(string lpFileName, uint dwDesiredAccess, uint dwShareMode, System.IntPtr lpSecurityAttributes, uint dwCreationDisposition, uint dwFlagsAndAttributes, System.IntPtr hTemplateFile);
 
         [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
-        public static extern FileSafeHandle CreateNamedPipe(string lpName, uint dwOpenMode, uint dwPipeMode, uint nMaxInstances, uint nOutBufferSize, uint nInBufferSize, uint nDefaultTimeOut, System.IntPtr lpSecurityAttributes);
+        public static extern FileSafeHandle CreateNamedPipe(string lpName, uint dwOpenMode, uint dwPipeMode, uint nMaxInstances, uint nOutBufferSize, uint nInBufferSize, uint nDefaultTimeOut, SECURITY_ATTRIBUTES lpSecurityAttributes);
 
         [DllImport("kernel32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]

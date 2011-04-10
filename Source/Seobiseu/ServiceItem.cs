@@ -13,6 +13,18 @@ namespace Seobiseu {
             this.Status = service.Status;
         }
 
+        public ServiceItem(ServiceController service, string serviceName) {
+            try {
+                this.DisplayName = service.DisplayName;
+                this.ServiceName = service.ServiceName;
+                this.Status = service.Status;
+            } catch (InvalidOperationException) {
+                this.DisplayName = serviceName + "?";
+                this.ServiceName = serviceName;
+                this.Status = 0;
+            }
+        }
+
         public ServiceItem(string serviceName) {
             this.DisplayName = serviceName + "?";
             this.ServiceName = serviceName;
