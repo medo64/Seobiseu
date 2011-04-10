@@ -44,12 +44,19 @@ namespace Seobiseu {
         }
 
         private void AddServiceForm_Load(object sender, EventArgs e) {
+            var serviceNames = new List<string>();
+            foreach (var serviceName in Settings.ServiceNames) {
+                serviceNames.Add(serviceName);
+            }
+
             foreach (var service in ServiceController.GetServices()) {
-                var item = new ServiceItem(service);
-                var lvi = new ListViewItem() { Tag = item };
-                lvi.Text = item.DisplayName;
-                lvi.ImageIndex = (int)item.Status;
-                lsvServices.Items.Add(lvi);
+                if ((serviceNames.Contains(service.ServiceName) == false) && (service.ServiceName != "Seobiseu")) {
+                    var item = new ServiceItem(service);
+                    var lvi = new ListViewItem() { Tag = item };
+                    lvi.Text = item.DisplayName;
+                    lvi.ImageIndex = (int)item.Status;
+                    lsvServices.Items.Add(lvi);
+                }
             }
 
         }
