@@ -28,6 +28,14 @@ namespace Seobiseu {
                         e.SuppressKeyPress = true;
                     } break;
 
+                case Keys.Escape: {
+                        if (Settings.UseNotificationArea) {
+                            this.Close();
+                            e.Handled = true;
+                            e.SuppressKeyPress = true;
+                        }
+                    } break;
+
                 case Keys.F5: {
                         mnuStart_Click(null, null);
                         e.Handled = true;

@@ -35,8 +35,8 @@ Root: HKCU; Subkey: "Software\Josip Medved"; Flags: uninsdeletekeyifempty
 
 [Run]
 Filename: "{app}\SeobiseuService.exe"; Parameters: "/Install"; Flags: runascurrentuser waituntilterminated
+Filename: "{app}\Seobiseu.exe"; Description: "Launch application now"; Flags: postinstall nowait skipifsilent runasoriginaluser
 Filename: "{app}\ReadMe.txt"; Description: "View ReadMe.txt"; Flags: postinstall runasoriginaluser shellexec nowait skipifsilent unchecked
-Filename: "{app}\Seobiseu.exe"; Description: "Launch application now"; Flags: postinstall nowait skipifsilent runasoriginaluser unchecked
 
 [UninstallRun]
 Filename: "{app}\SeobiseuService.exe"; Parameters: "/Uninstall"; Flags: runascurrentuser waituntilterminated
