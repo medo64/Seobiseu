@@ -48,13 +48,15 @@ namespace SeobiseuService {
                             switch (trans.Command) {
 
                                 case "Start": {
-                                        var service = new ServiceController(trans.ServiceName);
-                                        service.Start();
+                                        using (var service = new ServiceController(trans.ServiceName)) {
+                                            service.Start();
+                                        }
                                     } break;
 
                                 case "Stop": {
-                                        var service = new ServiceController(trans.ServiceName);
-                                        service.Stop();
+                                        using (var service = new ServiceController(trans.ServiceName)) {
+                                            service.Stop();
+                                        }
                                     } break;
 
                             }

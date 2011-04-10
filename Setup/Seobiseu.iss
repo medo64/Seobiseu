@@ -1,8 +1,8 @@
 [Setup]
 AppName = Seobiseu
-AppVerName = Seobiseu 1.00 (beta)
+AppVerName = Seobiseu 1.00
 DefaultDirName = {pf}\Josip Medved\Seobiseu
-OutputBaseFilename = seobiseu100b1
+OutputBaseFilename = seobiseu100
 OutputDir = ..\Releases
 SourceDir = ..\Binaries
 AppId = JosipMedved_Seobiseu
