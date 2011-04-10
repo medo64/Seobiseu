@@ -44,10 +44,10 @@
             this.lsvServices.FullRowSelect = true;
             this.lsvServices.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.lsvServices.LabelWrap = false;
-            this.lsvServices.Location = new System.Drawing.Point(12, 12);
+            this.lsvServices.Location = new System.Drawing.Point(0, 0);
             this.lsvServices.MultiSelect = false;
             this.lsvServices.Name = "lsvServices";
-            this.lsvServices.Size = new System.Drawing.Size(470, 300);
+            this.lsvServices.Size = new System.Drawing.Size(494, 309);
             this.lsvServices.SmallImageList = this.imlServiceStatus;
             this.lsvServices.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lsvServices.TabIndex = 0;

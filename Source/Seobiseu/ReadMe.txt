@@ -15,7 +15,7 @@ Shortcut keys
 
 Version history
 
-   Version 1.00 beta (2011-04-12)
+   Version 1.00 (2011-04-12)
 
       o  First public release.
 

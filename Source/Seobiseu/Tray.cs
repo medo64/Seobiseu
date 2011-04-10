@@ -34,7 +34,7 @@ namespace Seobiseu {
             bool needsSeparator = false;
             foreach (var serviceName in Settings.ServiceNames) {
                 using (var service = new ServiceController(serviceName)) {
-                    var item = new ServiceItem(service, serviceName);
+                    var item = new ServiceItem(serviceName);
                     var parent = new ToolStripMenuItem(item.DisplayName);
                     parent.DropDownItems.Add(new ToolStripMenuItem("Start", Medo.Resources.ManifestResources.GetBitmap("Seobiseu.Resources.Service-Start.png"), Menu_ServiceStart_OnClick) { Tag = item.ServiceName });
                     parent.DropDownItems.Add(new ToolStripMenuItem("Stop", Medo.Resources.ManifestResources.GetBitmap("Seobiseu.Resources.Service-Stop.png"), Menu_ServiceStop_OnClick) { Tag = item.ServiceName });

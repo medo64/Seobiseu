@@ -26,7 +26,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.lsvServices = new System.Windows.Forms.ListView();
-            this.lsvAllServices_colDisplayName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lsvServices_colDisplayName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.mnxServices = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mnxServicesStart = new System.Windows.Forms.ToolStripMenuItem();
             this.mnxServicesStop = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,8 +45,12 @@
             this.mnuAdd = new System.Windows.Forms.ToolStripButton();
             this.mnuRemove = new System.Windows.Forms.ToolStripButton();
             this.bwServicesUpdate = new System.ComponentModel.BackgroundWorker();
+            this.sta = new System.Windows.Forms.StatusStrip();
+            this.staStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.staServiceName = new System.Windows.Forms.ToolStripStatusLabel();
             this.mnxServices.SuspendLayout();
             this.mnu.SuspendLayout();
+            this.sta.SuspendLayout();
             this.SuspendLayout();
             // 
             // lsvServices
@@ -54,7 +58,7 @@
             this.lsvServices.AllowDrop = true;
             this.lsvServices.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lsvServices.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.lsvAllServices_colDisplayName});
+            this.lsvServices_colDisplayName});
             this.lsvServices.ContextMenuStrip = this.mnxServices;
             this.lsvServices.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lsvServices.FullRowSelect = true;
@@ -63,7 +67,7 @@
             this.lsvServices.Location = new System.Drawing.Point(0, 27);
             this.lsvServices.MultiSelect = false;
             this.lsvServices.Name = "lsvServices";
-            this.lsvServices.Size = new System.Drawing.Size(382, 228);
+            this.lsvServices.Size = new System.Drawing.Size(382, 203);
             this.lsvServices.SmallImageList = this.imlServiceStatus;
             this.lsvServices.TabIndex = 0;
             this.lsvServices.UseCompatibleStateImageBehavior = false;
@@ -76,8 +80,8 @@
             // 
             // lsvAllServices_colDisplayName
             // 
-            this.lsvAllServices_colDisplayName.Text = "Name";
-            this.lsvAllServices_colDisplayName.Width = 180;
+            this.lsvServices_colDisplayName.Text = "Name";
+            this.lsvServices_colDisplayName.Width = 180;
             // 
             // mnxServices
             // 
@@ -260,12 +264,38 @@
             this.bwServicesUpdate.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwServicesUpdate_DoWork);
             this.bwServicesUpdate.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bwServicesUpdate_ProgressChanged);
             // 
+            // statusStrip1
+            // 
+            this.sta.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.staStatus,
+            this.staServiceName});
+            this.sta.Location = new System.Drawing.Point(0, 230);
+            this.sta.Name = "statusStrip1";
+            this.sta.Size = new System.Drawing.Size(382, 25);
+            this.sta.TabIndex = 2;
+            this.sta.Text = "statusStrip1";
+            // 
+            // staStatus
+            // 
+            this.staStatus.Name = "staStatus";
+            this.staStatus.Size = new System.Drawing.Size(323, 20);
+            this.staStatus.Spring = true;
+            this.staStatus.Text = " ";
+            this.staStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // staServiceName
+            // 
+            this.staServiceName.Name = "staServiceName";
+            this.staServiceName.Size = new System.Drawing.Size(13, 20);
+            this.staServiceName.Text = " ";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(382, 255);
             this.Controls.Add(this.lsvServices);
+            this.Controls.Add(this.sta);
             this.Controls.Add(this.mnu);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
@@ -280,6 +310,8 @@
             this.mnxServices.ResumeLayout(false);
             this.mnu.ResumeLayout(false);
             this.mnu.PerformLayout();
+            this.sta.ResumeLayout(false);
+            this.sta.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -288,7 +320,7 @@
         #endregion
 
         private System.Windows.Forms.ListView lsvServices;
-        private System.Windows.Forms.ColumnHeader lsvAllServices_colDisplayName;
+        private System.Windows.Forms.ColumnHeader lsvServices_colDisplayName;
         private System.Windows.Forms.ToolStrip mnu;
         private System.Windows.Forms.ToolStripButton mnuStart;
         private System.Windows.Forms.ToolStripButton mnuAbout;
@@ -307,6 +339,9 @@
         private System.Windows.Forms.ToolStripMenuItem mnxServicesAdd;
         private System.Windows.Forms.ToolStripMenuItem mnxServicesRemove;
         private System.ComponentModel.BackgroundWorker bwServicesUpdate;
+        private System.Windows.Forms.StatusStrip sta;
+        private System.Windows.Forms.ToolStripStatusLabel staStatus;
+        private System.Windows.Forms.ToolStripStatusLabel staServiceName;
 
     }
 }

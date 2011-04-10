@@ -50,13 +50,15 @@ namespace Seobiseu {
             }
 
             foreach (var service in ServiceController.GetServices()) {
-                if ((serviceNames.Contains(service.ServiceName) == false) && (service.ServiceName != "Seobiseu")) {
-                    var item = new ServiceItem(service);
-                    var lvi = new ListViewItem() { Tag = item };
-                    lvi.Text = item.DisplayName;
-                    lvi.ImageIndex = (int)item.Status;
-                    lsvServices.Items.Add(lvi);
-                }
+                try {
+                    if ((serviceNames.Contains(service.ServiceName) == false) && (service.ServiceName != "Seobiseu")) {
+                        var item = new ServiceItem(service);
+                        var lvi = new ListViewItem() { Tag = item };
+                        lvi.Text = item.DisplayName;
+                        lvi.ImageIndex = (int)item.Status;
+                        lsvServices.Items.Add(lvi);
+                    }
+                } catch (InvalidOperationException) { } //in case of service controller returning error.
             }
 
         }

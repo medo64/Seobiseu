@@ -7,17 +7,13 @@ using System.ServiceProcess;
 namespace Seobiseu {
     public class ServiceItem {
 
-        public ServiceItem(ServiceController service) {
-            this.DisplayName = service.DisplayName;
-            this.ServiceName = service.ServiceName;
-            this.Status = service.Status;
-        }
-
-        public ServiceItem(ServiceController service, string serviceName) {
+        public ServiceItem(string serviceName) {
             try {
-                this.DisplayName = service.DisplayName;
-                this.ServiceName = service.ServiceName;
-                this.Status = service.Status;
+                using (var service = new ServiceController(serviceName)) {
+                    this.DisplayName = service.DisplayName;
+                    this.ServiceName = service.ServiceName;
+                    this.Status = service.Status;
+                }
             } catch (InvalidOperationException) {
                 this.DisplayName = serviceName + "?";
                 this.ServiceName = serviceName;
@@ -25,10 +21,22 @@ namespace Seobiseu {
             }
         }
 
-        public ServiceItem(string serviceName) {
-            this.DisplayName = serviceName + "?";
-            this.ServiceName = serviceName;
-            this.Status = 0;
+        public ServiceItem(ServiceController service) {
+            try {
+                this.ServiceName = service.ServiceName;
+            } catch (InvalidOperationException) {
+                this.ServiceName = "";
+            }
+            try {
+                this.DisplayName = service.DisplayName;
+            } catch (InvalidOperationException) {
+                this.DisplayName = this.ServiceName + "?";
+            }
+            try {
+                this.Status = service.Status;
+            } catch (InvalidOperationException) {
+                this.Status = 0;
+            }
         }
 
         public string DisplayName { get; private set; }

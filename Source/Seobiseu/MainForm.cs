@@ -14,6 +14,9 @@ namespace Seobiseu {
         public MainForm() {
             InitializeComponent();
             this.Font = SystemFonts.MessageBoxFont;
+            mnu.Font = SystemFonts.MessageBoxFont;
+            lsvServices.Font = SystemFonts.MessageBoxFont;
+            sta.Font = SystemFonts.MessageBoxFont;
 
             mnu.Renderer = Helpers.ToolStripBorderlessSystemRendererInstance;
 
@@ -75,10 +78,14 @@ namespace Seobiseu {
         }
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e) {
+#if DEBUG
+            Application.Exit();
+#else
             if (Settings.UseNotificationArea == false) {
                 App.MainForm = null;
                 Application.Exit();
             }
+#endif
         }
 
         private void Form_Resize(object sender, EventArgs e) {
@@ -169,22 +176,12 @@ namespace Seobiseu {
         private void bwServicesUpdate_DoWork(object sender, DoWorkEventArgs e) {
             var currItems = new List<ServiceItem>();
             while (!bwServicesUpdate.CancellationPending) {
-                var services = new Dictionary<string, ServiceController>();
-                foreach (var service in ServiceController.GetServices()) {
-                    services.Add(service.ServiceName, service);
-                }
-
                 var newItems = new List<ServiceItem>();
                 var newItemsToAdd = new List<ServiceItem>();
                 var newItemsToChange = new List<ServiceItem>();
                 var newItemsToRemove = new List<ServiceItem>();
                 foreach (var serviceName in Settings.ServiceNames) {
-                    ServiceItem item;
-                    if (services.ContainsKey(serviceName)) {
-                        item = new ServiceItem(services[serviceName]);
-                    } else {
-                        item = new ServiceItem(serviceName);
-                    }
+                    ServiceItem item = new ServiceItem(serviceName);
 
                     newItems.Add(item);
                     if (currItems.Contains(item)) {
@@ -250,10 +247,23 @@ namespace Seobiseu {
                 mnuStart.Enabled = (service.Status == ServiceControllerStatus.Stopped) || (service.Status == ServiceControllerStatus.Paused);
                 mnuStop.Enabled = (service.Status == ServiceControllerStatus.Running);
                 mnuRemove.Enabled = true;
+                switch (service.Status) {
+                    case ServiceControllerStatus.Stopped: staStatus.Text = "Stopped."; break;
+                    case ServiceControllerStatus.StartPending: staStatus.Text = "Start pending..."; break;
+                    case ServiceControllerStatus.StopPending: staStatus.Text = "Stop pending..."; break;
+                    case ServiceControllerStatus.Running: staStatus.Text = "Running."; break;
+                    case ServiceControllerStatus.ContinuePending: staStatus.Text = "Continue pending..."; break;
+                    case ServiceControllerStatus.PausePending: staStatus.Text = "Pause pending..."; break;
+                    case ServiceControllerStatus.Paused: staStatus.Text = "Paused."; break;
+                    default: { staStatus.Text = "Unknown state."; break; }
+                }
+                staServiceName.Text = service.ServiceName;
             } else {
                 mnuStart.Enabled = false;
                 mnuStop.Enabled = false;
                 mnuRemove.Enabled = false;
+                staStatus.Text = "";
+                staServiceName.Text = "";
             }
         }
 
