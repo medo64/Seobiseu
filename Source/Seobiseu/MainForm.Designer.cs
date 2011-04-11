@@ -67,7 +67,7 @@
             this.lsvServices.Location = new System.Drawing.Point(0, 27);
             this.lsvServices.MultiSelect = false;
             this.lsvServices.Name = "lsvServices";
-            this.lsvServices.Size = new System.Drawing.Size(382, 203);
+            this.lsvServices.Size = new System.Drawing.Size(482, 203);
             this.lsvServices.SmallImageList = this.imlServiceStatus;
             this.lsvServices.TabIndex = 0;
             this.lsvServices.UseCompatibleStateImageBehavior = false;
@@ -78,7 +78,7 @@
             this.lsvServices.DragEnter += new System.Windows.Forms.DragEventHandler(this.lsvServices_DragEnter);
             this.lsvServices.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lsvServices_MouseUp);
             // 
-            // lsvAllServices_colDisplayName
+            // lsvServices_colDisplayName
             // 
             this.lsvServices_colDisplayName.Text = "Name";
             this.lsvServices_colDisplayName.Width = 180;
@@ -165,7 +165,7 @@
             this.mnu.Location = new System.Drawing.Point(0, 0);
             this.mnu.Name = "mnu";
             this.mnu.Padding = new System.Windows.Forms.Padding(1, 0, 1, 0);
-            this.mnu.Size = new System.Drawing.Size(382, 27);
+            this.mnu.Size = new System.Drawing.Size(482, 27);
             this.mnu.TabIndex = 1;
             // 
             // mnuStart
@@ -264,21 +264,21 @@
             this.bwServicesUpdate.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwServicesUpdate_DoWork);
             this.bwServicesUpdate.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bwServicesUpdate_ProgressChanged);
             // 
-            // statusStrip1
+            // sta
             // 
             this.sta.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.staStatus,
             this.staServiceName});
             this.sta.Location = new System.Drawing.Point(0, 230);
-            this.sta.Name = "statusStrip1";
-            this.sta.Size = new System.Drawing.Size(382, 25);
+            this.sta.Name = "sta";
+            this.sta.Size = new System.Drawing.Size(482, 25);
             this.sta.TabIndex = 2;
             this.sta.Text = "statusStrip1";
             // 
             // staStatus
             // 
             this.staStatus.Name = "staStatus";
-            this.staStatus.Size = new System.Drawing.Size(323, 20);
+            this.staStatus.Size = new System.Drawing.Size(454, 20);
             this.staStatus.Spring = true;
             this.staStatus.Text = " ";
             this.staStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -293,7 +293,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(382, 255);
+            this.ClientSize = new System.Drawing.Size(482, 255);
             this.Controls.Add(this.lsvServices);
             this.Controls.Add(this.sta);
             this.Controls.Add(this.mnu);
