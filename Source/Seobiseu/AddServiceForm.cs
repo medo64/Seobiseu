@@ -55,7 +55,7 @@ namespace Seobiseu {
                         var item = new ServiceItem(service);
                         var lvi = new ListViewItem() { Tag = item };
                         lvi.Text = item.DisplayName;
-                        lvi.ImageIndex = (int)item.Status;
+                        lvi.ImageIndex = item.StatusIndex;
                         lsvServices.Items.Add(lvi);
                     }
                 } catch (InvalidOperationException) { } //in case of service controller returning error.

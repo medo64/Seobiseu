@@ -63,13 +63,8 @@ namespace Seobiseu {
                 if (state != null) {
                     var serviceName = (string)state[0];
                     if (serviceName != null) {
-                        using (var service = new ServiceController(serviceName)) {
-                            try {
-                                item.Image = Medo.Resources.ManifestResources.GetBitmap("Seobiseu.Resources.Service-Status-" + ((int)service.Status).ToString(CultureInfo.InvariantCulture) + ".png");
-                            } catch (InvalidOperationException) {
-                                item.Image = null;
-                            }
-                        }
+                        var serviceItem = new ServiceItem(serviceName);
+                        item.Image = serviceItem.Image;
                     }
                 }
             }
@@ -83,20 +78,16 @@ namespace Seobiseu {
 
 
         static void Menu_Service_DropDownOpening(object sender, EventArgs e) {
-            var state = ((ToolStripMenuItem)sender).Tag as object[];
+            var itemParent = (ToolStripMenuItem)sender;
+            var state = itemParent.Tag as object[];
             if (state != null) {
                 var serviceName = (string)state[0];
                 var itemStart = (ToolStripMenuItem)state[1];
                 var itemStop = (ToolStripMenuItem)state[2];
-                using (var service = new ServiceController(serviceName)) {
-                    try {
-                        itemStart.Enabled = ((service.Status == ServiceControllerStatus.Stopped) || (service.Status == ServiceControllerStatus.Paused));
-                        itemStop.Enabled = (service.Status == ServiceControllerStatus.Running);
-                    } catch (InvalidOperationException) {
-                        itemStart.Enabled = false;
-                        itemStop.Enabled = false;
-                    }
-                }
+                var serviceItem = new ServiceItem(serviceName);
+                itemParent.Image = serviceItem.Image;
+                itemStart.Enabled = serviceItem.CanStart;
+                itemStop.Enabled = serviceItem.CanStop;
             }
         }
 

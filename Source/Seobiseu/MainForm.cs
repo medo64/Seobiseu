@@ -238,25 +238,16 @@ namespace Seobiseu {
             item.SubItems.Clear();
             item.Tag = zone;
             item.Text = zone.DisplayName;
-            item.ImageIndex = (int)zone.Status;
+            item.ImageIndex = zone.StatusIndex;
         }
 
         private void UpdateToolbar() {
             if (lsvServices.SelectedItems.Count > 0) {
                 var service = (ServiceItem)lsvServices.SelectedItems[0].Tag;
-                mnuStart.Enabled = (service.Status == ServiceControllerStatus.Stopped) || (service.Status == ServiceControllerStatus.Paused);
-                mnuStop.Enabled = (service.Status == ServiceControllerStatus.Running);
+                mnuStart.Enabled = service.CanStart;
+                mnuStop.Enabled = service.CanStop;
                 mnuRemove.Enabled = true;
-                switch (service.Status) {
-                    case ServiceControllerStatus.Stopped: staStatus.Text = "Stopped."; break;
-                    case ServiceControllerStatus.StartPending: staStatus.Text = "Start pending..."; break;
-                    case ServiceControllerStatus.StopPending: staStatus.Text = "Stop pending..."; break;
-                    case ServiceControllerStatus.Running: staStatus.Text = "Running."; break;
-                    case ServiceControllerStatus.ContinuePending: staStatus.Text = "Continue pending..."; break;
-                    case ServiceControllerStatus.PausePending: staStatus.Text = "Pause pending..."; break;
-                    case ServiceControllerStatus.Paused: staStatus.Text = "Paused."; break;
-                    default: { staStatus.Text = "Unknown state."; break; }
-                }
+                staStatus.Text = service.StatusText;
                 staServiceName.Text = service.ServiceName;
             } else {
                 mnuStart.Enabled = false;
