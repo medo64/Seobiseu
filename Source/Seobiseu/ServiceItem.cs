@@ -60,6 +60,10 @@ namespace Seobiseu {
             get { return ((this.Status == ServiceControllerStatus.Stopped) || (this.Status == ServiceControllerStatus.Paused)); }
         }
 
+        public bool CanRestart {
+            get { return (this.Status == ServiceControllerStatus.Running); }
+        }
+
         public bool CanStop {
             get { return (this.Status == ServiceControllerStatus.Running); }
         }

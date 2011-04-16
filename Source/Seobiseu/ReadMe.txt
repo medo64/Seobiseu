@@ -15,6 +15,10 @@ Shortcut keys
 
 Version history
 
+   Version 1.10 (2011-04-25)
+
+      o  Added restart.
+
    Version 1.00 (2011-04-12)
 
       o  First public release.

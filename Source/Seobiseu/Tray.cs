@@ -37,8 +37,9 @@ namespace Seobiseu {
                     var item = new ServiceItem(serviceName);
                     var parent = new ToolStripMenuItem(item.DisplayName);
                     parent.DropDownItems.Add(new ToolStripMenuItem("Start", Medo.Resources.ManifestResources.GetBitmap("Seobiseu.Resources.Service-Start.png"), Menu_ServiceStart_OnClick) { Tag = item.ServiceName });
+                    parent.DropDownItems.Add(new ToolStripMenuItem("Restart", Medo.Resources.ManifestResources.GetBitmap("Seobiseu.Resources.Service-Restart.png"), Menu_ServiceRestart_OnClick) { Tag = item.ServiceName });
                     parent.DropDownItems.Add(new ToolStripMenuItem("Stop", Medo.Resources.ManifestResources.GetBitmap("Seobiseu.Resources.Service-Stop.png"), Menu_ServiceStop_OnClick) { Tag = item.ServiceName });
-                    parent.Tag = new object[] { item.ServiceName, parent.DropDownItems[0], parent.DropDownItems[1] };
+                    parent.Tag = new object[] { item.ServiceName, parent.DropDownItems[0], parent.DropDownItems[1], parent.DropDownItems[2] };
                     parent.DropDownOpening += new EventHandler(Menu_Service_DropDownOpening);
                     Tray.Notify.ContextMenuStrip.Items.Add(parent);
                     Tray.Notify.ContextMenuStrip.Opening += new CancelEventHandler(Menu_Opening);
@@ -83,10 +84,12 @@ namespace Seobiseu {
             if (state != null) {
                 var serviceName = (string)state[0];
                 var itemStart = (ToolStripMenuItem)state[1];
-                var itemStop = (ToolStripMenuItem)state[2];
+                var itemRestart = (ToolStripMenuItem)state[2];
+                var itemStop = (ToolStripMenuItem)state[3];
                 var serviceItem = new ServiceItem(serviceName);
                 itemParent.Image = serviceItem.Image;
                 itemStart.Enabled = serviceItem.CanStart;
+                itemRestart.Enabled = serviceItem.CanRestart;
                 itemStop.Enabled = serviceItem.CanStop;
             }
         }
@@ -94,6 +97,19 @@ namespace Seobiseu {
         private static void Menu_ServiceStart_OnClick(object sender, EventArgs e) {
             var serviceName = ((ToolStripMenuItem)sender).Tag as string;
             Transfer.Send(new Transfer("Start", serviceName));
+        }
+
+        private static void Menu_ServiceRestart_OnClick(object sender, EventArgs e) {
+            var serviceName = ((ToolStripMenuItem)sender).Tag as string;
+            var bw = new BackgroundWorker();
+            bw.DoWork += new DoWorkEventHandler(delegate(object sender2, DoWorkEventArgs e2) {
+                Transfer.Send(new Transfer("Stop", serviceName));
+                using (var service = new ServiceController(serviceName)) {
+                    service.WaitForStatus(ServiceControllerStatus.Stopped, new TimeSpan(0, 5, 0));
+                }
+                Transfer.Send(new Transfer("Start", serviceName));
+            });
+            bw.RunWorkerAsync();
         }
 
         private static void Menu_ServiceStop_OnClick(object sender, EventArgs e) {

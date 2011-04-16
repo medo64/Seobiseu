@@ -5,6 +5,7 @@ using System.Drawing;
 using System.ServiceProcess;
 using System.Threading;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace Seobiseu {
     internal partial class MainForm : Form {
@@ -149,6 +150,7 @@ namespace Seobiseu {
 
         private void mnxServices_Opening(object sender, System.ComponentModel.CancelEventArgs e) {
             mnxServicesStart.Enabled = mnuStart.Enabled;
+            mnxServicesRestart.Enabled = mnuStop.Enabled;
             mnxServicesStop.Enabled = mnuStop.Enabled;
             mnxServicesAdd.Enabled = mnuAdd.Enabled;
             mnxServicesRemove.Enabled = mnuRemove.Enabled;
@@ -156,6 +158,21 @@ namespace Seobiseu {
 
         private void mnxServicesStart_Click(object sender, EventArgs e) {
             mnuStart_Click(null, null);
+        }
+
+        private void mnxServicesRestart_Click(object sender, EventArgs e) {
+            if (lsvServices.SelectedItems.Count > 0) {
+                var serviceName = ((ServiceItem)lsvServices.SelectedItems[0].Tag).ServiceName;
+                var bw = new BackgroundWorker();
+                bw.DoWork += new DoWorkEventHandler(delegate(object sender2, DoWorkEventArgs e2) {
+                    Transfer.Send(new Transfer("Stop", serviceName));
+                    using (var service = new ServiceController(serviceName)) {
+                        service.WaitForStatus(ServiceControllerStatus.Stopped, new TimeSpan(0, 5, 0));
+                    }
+                    Transfer.Send(new Transfer("Start", serviceName));
+                });
+                bw.RunWorkerAsync();
+            }
         }
 
         private void mnxServicesStop_Click(object sender, EventArgs e) {

@@ -29,6 +29,7 @@
             this.lsvServices_colDisplayName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.mnxServices = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mnxServicesStart = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnxServicesRestart = new System.Windows.Forms.ToolStripMenuItem();
             this.mnxServicesStop = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.mnxServicesAdd = new System.Windows.Forms.ToolStripMenuItem();
@@ -87,12 +88,13 @@
             // 
             this.mnxServices.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnxServicesStart,
+            this.mnxServicesRestart,
             this.mnxServicesStop,
             this.toolStripMenuItem2,
             this.mnxServicesAdd,
             this.mnxServicesRemove});
             this.mnxServices.Name = "mnxServices";
-            this.mnxServices.Size = new System.Drawing.Size(174, 128);
+            this.mnxServices.Size = new System.Drawing.Size(174, 130);
             this.mnxServices.Opening += new System.ComponentModel.CancelEventHandler(this.mnxServices_Opening);
             // 
             // mnxServicesStart
@@ -103,6 +105,14 @@
             this.mnxServicesStart.Size = new System.Drawing.Size(173, 24);
             this.mnxServicesStart.Text = "Start";
             this.mnxServicesStart.Click += new System.EventHandler(this.mnxServicesStart_Click);
+            // 
+            // mnxServicesRestart
+            // 
+            this.mnxServicesRestart.Image = ((System.Drawing.Image)(resources.GetObject("mnxServicesRestart.Image")));
+            this.mnxServicesRestart.Name = "mnxServicesRestart";
+            this.mnxServicesRestart.Size = new System.Drawing.Size(173, 24);
+            this.mnxServicesRestart.Text = "Restart";
+            this.mnxServicesRestart.Click += new System.EventHandler(this.mnxServicesRestart_Click);
             // 
             // mnxServicesStop
             // 
@@ -342,6 +352,7 @@
         private System.Windows.Forms.StatusStrip sta;
         private System.Windows.Forms.ToolStripStatusLabel staStatus;
         private System.Windows.Forms.ToolStripStatusLabel staServiceName;
+        private System.Windows.Forms.ToolStripMenuItem mnxServicesRestart;
 
     }
 }

@@ -154,6 +154,7 @@
     <Content Include="ReadMe.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="Resources\Service-Restart.png" />
     <EmbeddedResource Include="Resources\Service-Start.png" />
     <EmbeddedResource Include="Resources\Service-Stop.png" />
     <EmbeddedResource Include="Resources\Service-Status-1.png" />
