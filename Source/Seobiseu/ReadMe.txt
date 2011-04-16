@@ -15,7 +15,7 @@ Shortcut keys
 
 Version history
 
-   Version 1.10 (2011-04-25)
+   Version 1.10 (2011-04-26)
 
       o  Added restart.
 
