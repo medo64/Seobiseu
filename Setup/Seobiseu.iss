@@ -30,9 +30,9 @@ Source: "ReadMe.txt";           DestDir: "{app}";  Flags: overwritereadonly unin
 Name: "{userstartmenu}\Seobiseu";  Filename: "{app}\Seobiseu.exe"
 
 [Registry]
-Root: HKCU;  Subkey: "Software\Josip Medved\Seobiseu";                 ValueName: "Installed";  ValueType: dword;   ValueData: "1";  Flags: uninsdeletekey
-Root: HKCU;  Subkey: "Software\Josip Medved";                                                                                        Flags: uninsdeletekeyifempty
-Root: HKCU;  Subkey: "Software\Microsoft\Windows\CurrentVersion\Run";  ValueName: "Seobiseu";   ValueType: string;                   Flags: uninsdeletevalue;
+Root: HKCU;  Subkey: "Software\Josip Medved\Seobiseu";                 ValueName: "Installed";  ValueType: dword;   ValueData: "1";                             Flags: uninsdeletekey
+Root: HKCU;  Subkey: "Software\Josip Medved";                                                                                                                   Flags: uninsdeletekeyifempty
+Root: HKCU;  Subkey: "Software\Microsoft\Windows\CurrentVersion\Run";  ValueName: "Seobiseu";   ValueType: string;  ValueData: """{app}\Seobiseu.exe"" /tray";  Flags: uninsdeletevalue;
 
 [Run]
 Filename: "{app}\SeobiseuService.exe";  Parameters: "/Install";                                          Flags: runascurrentuser waituntilterminated
