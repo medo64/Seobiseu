@@ -138,7 +138,7 @@ namespace Seobiseu {
         }
 
         private void mnuReportABug_Click(object sender, EventArgs e) {
-            Medo.Diagnostics.ErrorReport.ShowDialog(this, null, new Uri("http://jmedved.com/errorreport/"));
+            Medo.Diagnostics.ErrorReport.ShowDialog(this, null, new Uri("http://jmedved.com/feedback/"));
         }
 
         private void mnuAbout_Click(object sender, EventArgs e) {
