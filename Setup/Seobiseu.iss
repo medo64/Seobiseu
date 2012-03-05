@@ -1,8 +1,8 @@
 [Setup]
 AppName = Seobiseu
-AppVerName = Seobiseu 1.10
+AppVerName = Seobiseu 0.00
 DefaultDirName = {pf}\Josip Medved\Seobiseu
-OutputBaseFilename = seobiseu110
+OutputBaseFilename = seobiseu000
 OutputDir = ..\Releases
 SourceDir = ..\Binaries
 AppId = JosipMedved_Seobiseu
@@ -54,4 +54,3 @@ begin
     Exec(ExpandConstant('{app}\SeobiseuService.exe'), '/Uninstall', '', SW_SHOW, ewWaitUntilTerminated, ResultCode)
     Result := Result;
 end;
-
