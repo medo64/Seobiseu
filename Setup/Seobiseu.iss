@@ -52,5 +52,6 @@ var
     ResultCode: Integer;
 begin
     Exec(ExpandConstant('{app}\SeobiseuService.exe'), '/Uninstall', '', SW_SHOW, ewWaitUntilTerminated, ResultCode)
+    Result := Result;
 end;
 
