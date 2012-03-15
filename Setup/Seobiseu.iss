@@ -1,25 +1,38 @@
+#define AppName        GetStringFileInfo('..\Binaries\Seobiseu.exe', 'ProductName')
+#define AppVersion     GetStringFileInfo('..\Binaries\Seobiseu.exe', 'ProductVersion')
+#define AppFileVersion GetStringFileInfo('..\Binaries\Seobiseu.exe', 'FileVersion')
+#define AppCompany     GetStringFileInfo('..\Binaries\Seobiseu.exe', 'CompanyName')
+#define AppCopyright   GetStringFileInfo('..\Binaries\Seobiseu.exe', 'LegalCopyright')
+#define AppBase        LowerCase(StringChange(AppName, ' ', ''))
+#define AppSetupFile   AppBase + StringChange(AppVersion, '.', '')
+
 [Setup]
-AppName = Seobiseu
-AppVerName = Seobiseu 0.00
-DefaultDirName = {pf}\Josip Medved\Seobiseu
-OutputBaseFilename = seobiseu000
-OutputDir = ..\Releases
-SourceDir = ..\Binaries
-AppId = JosipMedved_Seobiseu
-AppMutex = Global\JosipMedved_Seobiseu
-AppPublisher = Josip Medved
-AppPublisherURL = http://www.jmedved.com/seobiseu/
-UninstallDisplayIcon = {app}\Seobiseu.exe
-AlwaysShowComponentsList = no
-ArchitecturesInstallIn64BitMode = x64
-DisableProgramGroupPage = yes
-MergeDuplicateFiles = yes
-MinVersion = 0, 5.1.2600
-PrivilegesRequired = admin
-ShowLanguageDialog = no
-SolidCompression = yes
-ChangesAssociations = yes
-DisableWelcomePage = yes
+AppName={#AppName}
+AppVersion={#AppVersion}
+AppVerName={#AppName} {#AppVersion}
+AppPublisher={#AppCompany}
+AppPublisherURL=http://www.jmedved.com/{#AppBase}/
+AppCopyright={#AppCopyright}
+VersionInfoProductVersion={#AppVersion}
+VersionInfoProductTextVersion={#AppVersion}
+VersionInfoVersion={#AppFileVersion}
+DefaultDirName={pf}\{#AppCompany}\{#AppName}
+OutputBaseFilename={#AppSetupFile}
+OutputDir=..\Releases
+SourceDir=..\Binaries
+AppId=JosipMedved_Seobiseu
+AppMutex=Global\JosipMedved_Seobiseu
+UninstallDisplayIcon={app}\Seobiseu.exe
+AlwaysShowComponentsList=no
+ArchitecturesInstallIn64BitMode=x64
+DisableProgramGroupPage=yes
+MergeDuplicateFiles=yes
+MinVersion=0,5.1
+PrivilegesRequired=admin
+ShowLanguageDialog=no
+SolidCompression=yes
+ChangesAssociations=yes
+DisableWelcomePage=yes
 
 [Files]
 Source: "Seobiseu.exe";         DestDir: "{app}";  Flags: ignoreversion;
