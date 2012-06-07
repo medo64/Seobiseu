@@ -15,6 +15,10 @@ Shortcut keys
 
 Version history
 
+   Version Next
+
+      o  Bug fixing.
+
    Version 1.10 (2011-04-26)
 
       o  Added restart.
