@@ -107,7 +107,9 @@
     <None Include="..\Seobiseu\Properties\App.snk">
       <Link>Properties\App.snk</Link>
     </None>
-    <None Include="Properties\App.manifest" />
+    <None Include="Properties\App.manifest">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
