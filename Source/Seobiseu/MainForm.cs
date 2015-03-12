@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -20,6 +20,7 @@ namespace Seobiseu {
             sta.Font = SystemFonts.MessageBoxFont;
 
             mnu.Renderer = Helpers.ToolStripBorderlessSystemRendererInstance;
+            Helpers.UpdateToolstripImages(imlServiceStatus, mnu, mnxServices);
 
             Medo.Windows.Forms.State.SetupOnLoadAndClose(this);
         }
@@ -131,17 +132,17 @@ namespace Seobiseu {
             }
         }
 
-        private void mnuOptions_Click(object sender, EventArgs e) {
+        private void mnuAppOptions_Click(object sender, EventArgs e) {
             using (var frm = new OptionsForm()) {
                 frm.ShowDialog(this);
             }
         }
 
-        private void mnuReportABug_Click(object sender, EventArgs e) {
+        private void mnuAppFeedback_Click(object sender, EventArgs e) {
             Medo.Diagnostics.ErrorReport.ShowDialog(this, null, new Uri("http://jmedved.com/feedback/"));
         }
 
-        private void mnuAbout_Click(object sender, EventArgs e) {
+        private void mnuAppAbout_Click(object sender, EventArgs e) {
             Medo.Windows.Forms.AboutBox.ShowDialog(this, new Uri("http://www.jmedved.com/seobiseu/"));
         }
 

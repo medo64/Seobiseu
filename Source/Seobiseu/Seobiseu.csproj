@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -119,6 +119,11 @@
     <Compile Include="App.cs" />
     <Compile Include="Properties\SolutionInfo.cs" />
     <Compile Include="%28Common%29\Transfer.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="ServiceItem.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Tray.cs" />
@@ -151,16 +156,10 @@
     <Content Include="ReadMe.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="Resources\Service-Restart.png" />
-    <EmbeddedResource Include="Resources\Service-Start.png" />
-    <EmbeddedResource Include="Resources\Service-Stop.png" />
-    <EmbeddedResource Include="Resources\Service-Status-1.png" />
-    <EmbeddedResource Include="Resources\Service-Status-2.png" />
-    <EmbeddedResource Include="Resources\Service-Status-3.png" />
-    <EmbeddedResource Include="Resources\Service-Status-4.png" />
-    <EmbeddedResource Include="Resources\Service-Status-5.png" />
-    <EmbeddedResource Include="Resources\Service-Status-6.png" />
-    <EmbeddedResource Include="Resources\Service-Status-7.png" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="AddServiceForm.resx">

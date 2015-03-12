@@ -1,4 +1,4 @@
-﻿
+
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -51,7 +51,24 @@ namespace Seobiseu {
                 if ((this.Status == 0) || ((int)this.Status > 7)) {
                     return null;
                 } else {
-                    return Medo.Resources.ManifestResources.GetBitmap("Seobiseu.Resources.Service-Status-" + ((int)this.Status).ToString(CultureInfo.InvariantCulture) + ".png");
+                    switch (this.Status) { 
+                        case ServiceControllerStatus.Stopped:
+                        case ServiceControllerStatus.StopPending:
+                            return Seobiseu.Properties.Resources.staServiceStopped_16;
+                        
+                        case ServiceControllerStatus.StartPending:
+                        case ServiceControllerStatus.Running:
+                        case ServiceControllerStatus.ContinuePending:
+                            return Seobiseu.Properties.Resources.staServiceRunning_16;
+                        
+                        case ServiceControllerStatus.PausePending:
+                        case ServiceControllerStatus.Paused:
+                            return Seobiseu.Properties.Resources.staServicePaused_16;
+
+                        default:
+                            return Seobiseu.Properties.Resources.staServiceUnknown_16;
+
+                    }
                 }
             }
         }

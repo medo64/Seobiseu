@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Drawing;
@@ -36,9 +36,9 @@ namespace Seobiseu {
                 using (var service = new ServiceController(serviceName)) {
                     var item = new ServiceItem(serviceName);
                     var parent = new ToolStripMenuItem(item.DisplayName);
-                    parent.DropDownItems.Add(new ToolStripMenuItem("Start", Medo.Resources.ManifestResources.GetBitmap("Seobiseu.Resources.Service-Start.png"), Menu_ServiceStart_OnClick) { Tag = item.ServiceName });
-                    parent.DropDownItems.Add(new ToolStripMenuItem("Restart", Medo.Resources.ManifestResources.GetBitmap("Seobiseu.Resources.Service-Restart.png"), Menu_ServiceRestart_OnClick) { Tag = item.ServiceName });
-                    parent.DropDownItems.Add(new ToolStripMenuItem("Stop", Medo.Resources.ManifestResources.GetBitmap("Seobiseu.Resources.Service-Stop.png"), Menu_ServiceStop_OnClick) { Tag = item.ServiceName });
+                    parent.DropDownItems.Add(new ToolStripMenuItem("Start", Seobiseu.Properties.Resources.mnuStart_16, Menu_ServiceStart_OnClick) { Tag = item.ServiceName });
+                    parent.DropDownItems.Add(new ToolStripMenuItem("Restart", Seobiseu.Properties.Resources.mnuRestart_16, Menu_ServiceRestart_OnClick) { Tag = item.ServiceName });
+                    parent.DropDownItems.Add(new ToolStripMenuItem("Stop", Seobiseu.Properties.Resources.mnuStop_16, Menu_ServiceStop_OnClick) { Tag = item.ServiceName });
                     parent.Tag = new object[] { item.ServiceName, parent.DropDownItems[0], parent.DropDownItems[1], parent.DropDownItems[2] };
                     parent.DropDownOpening += new EventHandler(Menu_Service_DropDownOpening);
                     Tray.Notify.ContextMenuStrip.Items.Add(parent);

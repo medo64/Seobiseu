@@ -1,4 +1,4 @@
-﻿namespace Seobiseu {
+namespace Seobiseu {
     partial class MainForm {
         /// <summary>
         /// Required designer variable.
@@ -28,27 +28,28 @@
             this.lsvServices = new System.Windows.Forms.ListView();
             this.lsvServices_colDisplayName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.mnxServices = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.mnxServicesStart = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnxServicesRestart = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnxServicesStop = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
-            this.mnxServicesAdd = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnxServicesRemove = new System.Windows.Forms.ToolStripMenuItem();
             this.imlServiceStatus = new System.Windows.Forms.ImageList(this.components);
             this.mnu = new System.Windows.Forms.ToolStrip();
-            this.mnuStart = new System.Windows.Forms.ToolStripButton();
-            this.mnuAbout = new System.Windows.Forms.ToolStripButton();
-            this.mnuReportABug = new System.Windows.Forms.ToolStripButton();
-            this.mnuOptions = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.mnuStop = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.mnuAdd = new System.Windows.Forms.ToolStripButton();
-            this.mnuRemove = new System.Windows.Forms.ToolStripButton();
             this.bwServicesUpdate = new System.ComponentModel.BackgroundWorker();
             this.sta = new System.Windows.Forms.StatusStrip();
             this.staStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.staServiceName = new System.Windows.Forms.ToolStripStatusLabel();
+            this.mnxServicesStart = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnxServicesRestart = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnxServicesStop = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnxServicesAdd = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnxServicesRemove = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuStart = new System.Windows.Forms.ToolStripButton();
+            this.mnuStop = new System.Windows.Forms.ToolStripButton();
+            this.mnuAdd = new System.Windows.Forms.ToolStripButton();
+            this.mnuRemove = new System.Windows.Forms.ToolStripButton();
+            this.mnuApp = new System.Windows.Forms.ToolStripDropDownButton();
+            this.mnuAppOptions = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuApp0 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuAppFeedback = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuAppAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.mnxServices.SuspendLayout();
             this.mnu.SuspendLayout();
             this.sta.SuspendLayout();
@@ -97,175 +98,38 @@
             this.mnxServices.Size = new System.Drawing.Size(174, 130);
             this.mnxServices.Opening += new System.ComponentModel.CancelEventHandler(this.mnxServices_Opening);
             // 
-            // mnxServicesStart
-            // 
-            this.mnxServicesStart.Image = ((System.Drawing.Image)(resources.GetObject("mnxServicesStart.Image")));
-            this.mnxServicesStart.Name = "mnxServicesStart";
-            this.mnxServicesStart.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.mnxServicesStart.Size = new System.Drawing.Size(173, 24);
-            this.mnxServicesStart.Text = "Start";
-            this.mnxServicesStart.Click += new System.EventHandler(this.mnxServicesStart_Click);
-            // 
-            // mnxServicesRestart
-            // 
-            this.mnxServicesRestart.Image = ((System.Drawing.Image)(resources.GetObject("mnxServicesRestart.Image")));
-            this.mnxServicesRestart.Name = "mnxServicesRestart";
-            this.mnxServicesRestart.Size = new System.Drawing.Size(173, 24);
-            this.mnxServicesRestart.Text = "Restart";
-            this.mnxServicesRestart.Click += new System.EventHandler(this.mnxServicesRestart_Click);
-            // 
-            // mnxServicesStop
-            // 
-            this.mnxServicesStop.Image = ((System.Drawing.Image)(resources.GetObject("mnxServicesStop.Image")));
-            this.mnxServicesStop.Name = "mnxServicesStop";
-            this.mnxServicesStop.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Shift | System.Windows.Forms.Keys.F5)));
-            this.mnxServicesStop.Size = new System.Drawing.Size(173, 24);
-            this.mnxServicesStop.Text = "Stop";
-            this.mnxServicesStop.Click += new System.EventHandler(this.mnxServicesStop_Click);
-            // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
             this.toolStripMenuItem2.Size = new System.Drawing.Size(170, 6);
             // 
-            // mnxServicesAdd
-            // 
-            this.mnxServicesAdd.Image = ((System.Drawing.Image)(resources.GetObject("mnxServicesAdd.Image")));
-            this.mnxServicesAdd.Name = "mnxServicesAdd";
-            this.mnxServicesAdd.ShortcutKeys = System.Windows.Forms.Keys.Insert;
-            this.mnxServicesAdd.Size = new System.Drawing.Size(173, 24);
-            this.mnxServicesAdd.Text = "Add";
-            this.mnxServicesAdd.Click += new System.EventHandler(this.mnxServicesAdd_Click);
-            // 
-            // mnxServicesRemove
-            // 
-            this.mnxServicesRemove.Image = ((System.Drawing.Image)(resources.GetObject("mnxServicesRemove.Image")));
-            this.mnxServicesRemove.Name = "mnxServicesRemove";
-            this.mnxServicesRemove.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-            this.mnxServicesRemove.Size = new System.Drawing.Size(173, 24);
-            this.mnxServicesRemove.Text = "Remove";
-            this.mnxServicesRemove.Click += new System.EventHandler(this.mnxServicesRemove_Click);
-            // 
             // imlServiceStatus
             // 
-            this.imlServiceStatus.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imlServiceStatus.ImageStream")));
+            this.imlServiceStatus.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
+            this.imlServiceStatus.ImageSize = new System.Drawing.Size(16, 16);
             this.imlServiceStatus.TransparentColor = System.Drawing.Color.Transparent;
-            this.imlServiceStatus.Images.SetKeyName(0, "Service 0x00 Unknown (16x16).png");
-            this.imlServiceStatus.Images.SetKeyName(1, "Service 0x01 Stopped (16x16).png");
-            this.imlServiceStatus.Images.SetKeyName(2, "Service 0x02 StartPending (16x16).png");
-            this.imlServiceStatus.Images.SetKeyName(3, "Service 0x03 StopPending (16x16).png");
-            this.imlServiceStatus.Images.SetKeyName(4, "Service 0x04 Running (16x16).png");
-            this.imlServiceStatus.Images.SetKeyName(5, "Service 0x05 ContinuePending (16x16).png");
-            this.imlServiceStatus.Images.SetKeyName(6, "Service 0x06 PausePending (16x16).png");
-            this.imlServiceStatus.Images.SetKeyName(7, "Service 0x07 Paused (16x16).png");
             // 
             // mnu
             // 
             this.mnu.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.mnu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuStart,
-            this.mnuAbout,
-            this.mnuReportABug,
-            this.mnuOptions,
-            this.toolStripSeparator1,
             this.mnuStop,
             this.toolStripSeparator2,
             this.mnuAdd,
-            this.mnuRemove});
+            this.mnuRemove,
+            this.mnuApp});
             this.mnu.Location = new System.Drawing.Point(0, 0);
             this.mnu.Name = "mnu";
             this.mnu.Padding = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.mnu.Size = new System.Drawing.Size(482, 27);
             this.mnu.TabIndex = 1;
             // 
-            // mnuStart
-            // 
-            this.mnuStart.Image = ((System.Drawing.Image)(resources.GetObject("mnuStart.Image")));
-            this.mnuStart.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.mnuStart.Name = "mnuStart";
-            this.mnuStart.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
-            this.mnuStart.Size = new System.Drawing.Size(60, 24);
-            this.mnuStart.Text = "Start";
-            this.mnuStart.ToolTipText = "Start <F5>";
-            this.mnuStart.Click += new System.EventHandler(this.mnuStart_Click);
-            // 
-            // mnuAbout
-            // 
-            this.mnuAbout.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.mnuAbout.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.mnuAbout.Image = ((System.Drawing.Image)(resources.GetObject("mnuAbout.Image")));
-            this.mnuAbout.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.mnuAbout.Name = "mnuAbout";
-            this.mnuAbout.Size = new System.Drawing.Size(23, 24);
-            this.mnuAbout.Text = "About";
-            this.mnuAbout.Click += new System.EventHandler(this.mnuAbout_Click);
-            // 
-            // mnuReportABug
-            // 
-            this.mnuReportABug.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.mnuReportABug.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.mnuReportABug.Image = ((System.Drawing.Image)(resources.GetObject("mnuReportABug.Image")));
-            this.mnuReportABug.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.mnuReportABug.Name = "mnuReportABug";
-            this.mnuReportABug.Size = new System.Drawing.Size(23, 24);
-            this.mnuReportABug.Text = "Report a bug";
-            this.mnuReportABug.Click += new System.EventHandler(this.mnuReportABug_Click);
-            // 
-            // mnuOptions
-            // 
-            this.mnuOptions.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.mnuOptions.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.mnuOptions.Image = ((System.Drawing.Image)(resources.GetObject("mnuOptions.Image")));
-            this.mnuOptions.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.mnuOptions.Name = "mnuOptions";
-            this.mnuOptions.Size = new System.Drawing.Size(23, 24);
-            this.mnuOptions.Text = "Options";
-            this.mnuOptions.Click += new System.EventHandler(this.mnuOptions_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 27);
-            // 
-            // mnuStop
-            // 
-            this.mnuStop.Image = ((System.Drawing.Image)(resources.GetObject("mnuStop.Image")));
-            this.mnuStop.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.mnuStop.Name = "mnuStop";
-            this.mnuStop.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
-            this.mnuStop.Size = new System.Drawing.Size(60, 24);
-            this.mnuStop.Text = "Stop";
-            this.mnuStop.ToolTipText = "Stop <Shift+F5>";
-            this.mnuStop.Click += new System.EventHandler(this.mnuStop_Click);
-            // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 27);
-            // 
-            // mnuAdd
-            // 
-            this.mnuAdd.Image = ((System.Drawing.Image)(resources.GetObject("mnuAdd.Image")));
-            this.mnuAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.mnuAdd.Name = "mnuAdd";
-            this.mnuAdd.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
-            this.mnuAdd.Size = new System.Drawing.Size(57, 24);
-            this.mnuAdd.Text = "Add";
-            this.mnuAdd.ToolTipText = "Add <Ins>";
-            this.mnuAdd.Click += new System.EventHandler(this.mnuAdd_Click);
-            // 
-            // mnuRemove
-            // 
-            this.mnuRemove.Image = ((System.Drawing.Image)(resources.GetObject("mnuRemove.Image")));
-            this.mnuRemove.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.mnuRemove.Name = "mnuRemove";
-            this.mnuRemove.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
-            this.mnuRemove.Size = new System.Drawing.Size(83, 24);
-            this.mnuRemove.Text = "Remove";
-            this.mnuRemove.ToolTipText = "Remove <Del>";
-            this.mnuRemove.Click += new System.EventHandler(this.mnuRemove_Click);
             // 
             // bwServicesUpdate
             // 
@@ -298,6 +162,140 @@
             this.staServiceName.Name = "staServiceName";
             this.staServiceName.Size = new System.Drawing.Size(13, 20);
             this.staServiceName.Text = " ";
+            // 
+            // mnxServicesStart
+            // 
+            this.mnxServicesStart.Image = ((System.Drawing.Image)(resources.GetObject("mnxServicesStart.Image")));
+            this.mnxServicesStart.Name = "mnxServicesStart";
+            this.mnxServicesStart.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.mnxServicesStart.Size = new System.Drawing.Size(173, 24);
+            this.mnxServicesStart.Tag = "mnuStart";
+            this.mnxServicesStart.Text = "Start";
+            this.mnxServicesStart.Click += new System.EventHandler(this.mnxServicesStart_Click);
+            // 
+            // mnxServicesRestart
+            // 
+            this.mnxServicesRestart.Image = ((System.Drawing.Image)(resources.GetObject("mnxServicesRestart.Image")));
+            this.mnxServicesRestart.Name = "mnxServicesRestart";
+            this.mnxServicesRestart.Size = new System.Drawing.Size(173, 24);
+            this.mnxServicesRestart.Tag = "mnuRestart";
+            this.mnxServicesRestart.Text = "Restart";
+            this.mnxServicesRestart.Click += new System.EventHandler(this.mnxServicesRestart_Click);
+            // 
+            // mnxServicesStop
+            // 
+            this.mnxServicesStop.Image = ((System.Drawing.Image)(resources.GetObject("mnxServicesStop.Image")));
+            this.mnxServicesStop.Name = "mnxServicesStop";
+            this.mnxServicesStop.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Shift | System.Windows.Forms.Keys.F5)));
+            this.mnxServicesStop.Size = new System.Drawing.Size(173, 24);
+            this.mnxServicesStop.Tag = "mnuStop";
+            this.mnxServicesStop.Text = "Stop";
+            this.mnxServicesStop.Click += new System.EventHandler(this.mnxServicesStop_Click);
+            // 
+            // mnxServicesAdd
+            // 
+            this.mnxServicesAdd.Image = ((System.Drawing.Image)(resources.GetObject("mnxServicesAdd.Image")));
+            this.mnxServicesAdd.Name = "mnxServicesAdd";
+            this.mnxServicesAdd.ShortcutKeys = System.Windows.Forms.Keys.Insert;
+            this.mnxServicesAdd.Size = new System.Drawing.Size(173, 24);
+            this.mnxServicesAdd.Tag = "mnuAdd";
+            this.mnxServicesAdd.Text = "Add";
+            this.mnxServicesAdd.Click += new System.EventHandler(this.mnxServicesAdd_Click);
+            // 
+            // mnxServicesRemove
+            // 
+            this.mnxServicesRemove.Image = ((System.Drawing.Image)(resources.GetObject("mnxServicesRemove.Image")));
+            this.mnxServicesRemove.Name = "mnxServicesRemove";
+            this.mnxServicesRemove.ShortcutKeys = System.Windows.Forms.Keys.Delete;
+            this.mnxServicesRemove.Size = new System.Drawing.Size(173, 24);
+            this.mnxServicesRemove.Tag = "mnuRemove";
+            this.mnxServicesRemove.Text = "Remove";
+            this.mnxServicesRemove.Click += new System.EventHandler(this.mnxServicesRemove_Click);
+            // 
+            // mnuStart
+            // 
+            this.mnuStart.Image = global::Seobiseu.Properties.Resources.mnuStart_16;
+            this.mnuStart.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.mnuStart.Name = "mnuStart";
+            this.mnuStart.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
+            this.mnuStart.Size = new System.Drawing.Size(60, 24);
+            this.mnuStart.Text = "Start";
+            this.mnuStart.ToolTipText = "Start service (F5)";
+            this.mnuStart.Click += new System.EventHandler(this.mnuStart_Click);
+            // 
+            // mnuStop
+            // 
+            this.mnuStop.Image = global::Seobiseu.Properties.Resources.mnuStop_16;
+            this.mnuStop.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.mnuStop.Name = "mnuStop";
+            this.mnuStop.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
+            this.mnuStop.Size = new System.Drawing.Size(60, 24);
+            this.mnuStop.Text = "Stop";
+            this.mnuStop.ToolTipText = "Stop service (Shift+F5)";
+            this.mnuStop.Click += new System.EventHandler(this.mnuStop_Click);
+            // 
+            // mnuAdd
+            // 
+            this.mnuAdd.Image = global::Seobiseu.Properties.Resources.mnuAdd_16;
+            this.mnuAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.mnuAdd.Name = "mnuAdd";
+            this.mnuAdd.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
+            this.mnuAdd.Size = new System.Drawing.Size(57, 24);
+            this.mnuAdd.Text = "Add";
+            this.mnuAdd.ToolTipText = "Add service (Insert)";
+            this.mnuAdd.Click += new System.EventHandler(this.mnuAdd_Click);
+            // 
+            // mnuRemove
+            // 
+            this.mnuRemove.Image = global::Seobiseu.Properties.Resources.mnuRemove_16;
+            this.mnuRemove.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.mnuRemove.Name = "mnuRemove";
+            this.mnuRemove.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
+            this.mnuRemove.Size = new System.Drawing.Size(83, 24);
+            this.mnuRemove.Text = "Remove";
+            this.mnuRemove.ToolTipText = "Remove service (Delete)";
+            this.mnuRemove.Click += new System.EventHandler(this.mnuRemove_Click);
+            // 
+            // mnuApp
+            // 
+            this.mnuApp.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.mnuApp.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.mnuApp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuAppOptions,
+            this.mnuApp0,
+            this.mnuAppFeedback,
+            this.mnuAppAbout});
+            this.mnuApp.Image = global::Seobiseu.Properties.Resources.mnuApp_16;
+            this.mnuApp.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.mnuApp.Name = "mnuApp";
+            this.mnuApp.Size = new System.Drawing.Size(29, 24);
+            this.mnuApp.Text = "Application";
+            // 
+            // mnuAppOptions
+            // 
+            this.mnuAppOptions.Name = "mnuAppOptions";
+            this.mnuAppOptions.Size = new System.Drawing.Size(176, 24);
+            this.mnuAppOptions.Text = "&Options";
+            this.mnuAppOptions.Click += new System.EventHandler(this.mnuAppOptions_Click);
+            // 
+            // mnuApp0
+            // 
+            this.mnuApp0.Name = "mnuApp0";
+            this.mnuApp0.Size = new System.Drawing.Size(173, 6);
+            // 
+            // mnuAppFeedback
+            // 
+            this.mnuAppFeedback.Name = "mnuAppFeedback";
+            this.mnuAppFeedback.Size = new System.Drawing.Size(176, 24);
+            this.mnuAppFeedback.Text = "Send &feedback";
+            this.mnuAppFeedback.Click += new System.EventHandler(this.mnuAppFeedback_Click);
+            // 
+            // mnuAppAbout
+            // 
+            this.mnuAppAbout.Name = "mnuAppAbout";
+            this.mnuAppAbout.Size = new System.Drawing.Size(176, 24);
+            this.mnuAppAbout.Text = "&About";
+            this.mnuAppAbout.Click += new System.EventHandler(this.mnuAppAbout_Click);
             // 
             // MainForm
             // 
@@ -336,7 +334,6 @@
         private System.Windows.Forms.ToolStripButton mnuAbout;
         private System.Windows.Forms.ToolStripButton mnuReportABug;
         private System.Windows.Forms.ToolStripButton mnuOptions;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton mnuStop;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton mnuAdd;
@@ -353,6 +350,11 @@
         private System.Windows.Forms.ToolStripStatusLabel staStatus;
         private System.Windows.Forms.ToolStripStatusLabel staServiceName;
         private System.Windows.Forms.ToolStripMenuItem mnxServicesRestart;
+        private System.Windows.Forms.ToolStripDropDownButton mnuApp;
+        private System.Windows.Forms.ToolStripMenuItem mnuAppOptions;
+        private System.Windows.Forms.ToolStripSeparator mnuApp0;
+        private System.Windows.Forms.ToolStripMenuItem mnuAppFeedback;
+        private System.Windows.Forms.ToolStripMenuItem mnuAppAbout;
 
     }
 }
