@@ -6,15 +6,25 @@
 #define AppBase        LowerCase(StringChange(AppName, ' ', ''))
 #define AppSetupFile   AppBase + StringChange(AppVersion, '.', '')
 
+#ifndef HgNode
+#  define HgNode
+#endif
+
+#define AppVersionEx   StringChange(AppVersion, '0.00', '')
+#if HgNode != ""
+#  define AppVersionEx AppVersionEx + " (" + HgNode + ")"
+#endif
+
+
 [Setup]
 AppName={#AppName}
 AppVersion={#AppVersion}
 AppVerName={#AppName} {#AppVersion}
 AppPublisher={#AppCompany}
-AppPublisherURL=http://www.jmedved.com/{#AppBase}/
+AppPublisherURL=http://jmedved.com/{#AppBase}/
 AppCopyright={#AppCopyright}
 VersionInfoProductVersion={#AppVersion}
-VersionInfoProductTextVersion={#AppVersion}
+VersionInfoProductTextVersion={#AppVersionEx}
 VersionInfoVersion={#AppFileVersion}
 DefaultDirName={pf}\{#AppCompany}\{#AppName}
 OutputBaseFilename={#AppSetupFile}
@@ -22,6 +32,8 @@ OutputDir=..\Releases
 SourceDir=..\Binaries
 AppId=JosipMedved_Seobiseu
 AppMutex=Global\JosipMedved_Seobiseu
+CloseApplications="yes"
+RestartApplications="no"
 UninstallDisplayIcon={app}\Seobiseu.exe
 AlwaysShowComponentsList=no
 ArchitecturesInstallIn64BitMode=x64
@@ -33,7 +45,14 @@ ShowLanguageDialog=no
 SolidCompression=yes
 ChangesAssociations=yes
 DisableWelcomePage=yes
-LicenseFile=..\Setup\License.txt
+LicenseFile=..\Setup\License.rtf
+
+
+[Messages]
+SetupAppTitle=Setup {#AppName} {#AppVersionEx}
+SetupWindowTitle=Setup {#AppName} {#AppVersionEx}
+BeveledLabel=jmedved.com
+
 
 [Files]
 Source: "Seobiseu.exe";         DestDir: "{app}";  Flags: ignoreversion;
@@ -60,6 +79,11 @@ Filename: "{app}\SeobiseuService.exe";  Parameters: "/Uninstall";  Flags: runasc
 
 
 [Code]
+
+procedure InitializeWizard;
+begin
+  WizardForm.LicenseAcceptedRadio.Checked := True;
+end;
 
 function PrepareToInstall(var NeedsRestart: Boolean): String;
 var

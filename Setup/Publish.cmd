@@ -1,4 +1,5 @@
 @ECHO OFF
+SETLOCAL enabledelayedexpansion
 
 SET        FILE_SETUP=".\Seobiseu.iss"
 SET     FILE_SOLUTION="..\Source\Seobiseu.sln"
@@ -13,6 +14,9 @@ SET        SETUP_TOOL="%PROGRAMFILES(x86)%\Inno Setup 5\iscc.exe"
 SET         SIGN_TOOL="%PROGRAMFILES(X86)%\Windows Kits\8.0\bin\x86\signtool.exe"
 SET         SIGN_HASH="C02FF227D5EE9F555C13D4C622697DF15C6FF871"
 SET SIGN_TIMESTAMPURL="http://timestamp.comodoca.com/rfc3161"
+
+FOR /F "delims=" %%N IN ('hg id -i 2^> NUL') DO @SET HG_NODE=%%N%
+FOR /F "delims=+" %%N IN ('hg id -n 2^> NUL') DO @SET HG_NODE_NUMBER=%%N%
 
 
 ECHO --- BUILD SOLUTION
@@ -33,6 +37,7 @@ IF EXIST %COMPILE_TOOL_1% (
 
 RMDIR /Q /S "..\Binaries" 2> NUL
 %COMPILE_TOOL% /Build "Release" %FILE_SOLUTION%
+COPY ..\ReadMe.text ..\Binaries\ReadMe.txt
 IF ERRORLEVEL 1 PAUSE && EXIT /B %ERRORLEVEL%
 
 ECHO.
@@ -64,7 +69,7 @@ ECHO --- BUILD SETUP
 ECHO.
 
 RMDIR /Q /S ".\Temp" 2> NUL
-CALL %SETUP_TOOL% /O".\Temp" %FILE_SETUP%
+CALL %SETUP_TOOL% /DHgNode=%HgNode% /O".\Temp" %FILE_SETUP%
 IF ERRORLEVEL 1 PAUSE && EXIT /B %ERRORLEVEL%
 
 FOR /F %%I IN ('DIR ".\Temp\*.exe" /B') DO SET _SETUPEXE=%%I
@@ -74,14 +79,16 @@ ECHO.
 ECHO.
 
 
-ECHO --- RENAME LATEST
+ECHO --- RENAME BUILD
 ECHO.
 
 SET _OLDSETUPEXE=%_SETUPEXE%
-SET _SETUPEXE=%_SETUPEXE:000=-LATEST%
-IF NOT %_OLDSETUPEXE%==%_SETUPEXE% (
+IF NOT [%HG_NODE%]==[] (
+    SET _SETUPEXE=!_SETUPEXE:000=~rev%HG_NODE_NUMBER%~%HG_NODE%!
+)
+IF NOT "%_OLDSETUPEXE%"=="%_SETUPEXE%" (
     ECHO Renaming %_OLDSETUPEXE% to %_SETUPEXE%
-    MOVE .\Temp\%_OLDSETUPEXE% .\Temp\%_SETUPEXE%
+    MOVE ".\Temp\%_OLDSETUPEXE%" ".\Temp\%_SETUPEXE%"
 ) ELSE (
     ECHO No rename needed.
 )
