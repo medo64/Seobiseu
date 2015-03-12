@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
@@ -26,6 +26,7 @@ namespace Seobiseu {
 
                 Medo.Application.UnhandledCatch.ThreadException += new EventHandler<ThreadExceptionEventArgs>(UnhandledCatch_ThreadException);
                 Medo.Application.UnhandledCatch.Attach();
+                Medo.Application.Restart.Register("/restart");
 
                 App.ThreadProxyForm = new Form();
                 App.ThreadProxyForm.CreateControl();
