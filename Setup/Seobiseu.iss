@@ -6,13 +6,9 @@
 #define AppBase        LowerCase(StringChange(AppName, ' ', ''))
 #define AppSetupFile   AppBase + StringChange(AppVersion, '.', '')
 
-#ifndef HgNode
-#  define HgNode
-#endif
-
 #define AppVersionEx   StringChange(AppVersion, '0.00', '')
-#if HgNode != ""
-#  define AppVersionEx AppVersionEx + " (" + HgNode + ")"
+#if "" != VersionHash
+#  define AppVersionEx AppVersionEx + " (" + VersionHash + ")"
 #endif
 
 
@@ -58,6 +54,7 @@ BeveledLabel=jmedved.com
 Source: "Seobiseu.exe";         DestDir: "{app}";  Flags: ignoreversion;
 Source: "SeobiseuService.exe";  DestDir: "{app}";  Flags: ignoreversion;
 Source: "ReadMe.txt";           DestDir: "{app}";  Flags: overwritereadonly uninsremovereadonly;  Attribs: readonly;
+Source: "License.txt";          DestDir: "{app}";  Flags: overwritereadonly uninsremovereadonly;  Attribs: readonly;
 
 [Icons]
 Name: "{userstartmenu}\Seobiseu";  Filename: "{app}\Seobiseu.exe"
