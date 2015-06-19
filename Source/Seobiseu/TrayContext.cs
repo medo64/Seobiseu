@@ -8,28 +8,33 @@ using System.ComponentModel;
 using System.Globalization;
 
 namespace Seobiseu {
-    internal static class Tray {
+    internal class TrayContext : ApplicationContext {
 
-        private static NotifyIcon Notify;
+        private NotifyIcon Notify;
+        public Form Form { get; private set; }
 
-        internal static void Show(bool interactive = false) {
-            Tray.Notify = new NotifyIcon();
-            Tray.Notify.Icon = GetApplicationIcon();
-            Tray.Notify.Text = "Seobiseu";
-            Tray.Notify.Visible = true;
+        internal void ShowIcon(bool interactive = false) {
+            if (this.Notify != null) {
+                this.Notify.Visible = false;
+                this.Notify.Dispose();
+            }
+            this.Notify = new NotifyIcon();
+            this.Notify.Icon = GetApplicationIcon();
+            this.Notify.Text = "Seobiseu";
+            this.Notify.Visible = true;
 
-            Tray.Notify.DoubleClick += Menu_Show_OnClick;
+            this.Notify.DoubleClick += Menu_Show_OnClick;
 
-            Tray.UpdateContextMenu();
+            this.UpdateContextMenu();
         }
 
-        internal static void UpdateContextMenu() {
-            if (Tray.Notify == null) { return; }
+        internal void UpdateContextMenu() {
+            if (this.Notify == null) { return; }
 
-            Tray.Notify.ContextMenuStrip = new ContextMenuStrip();
-            Tray.Notify.ContextMenuStrip.Items.Add(new ToolStripMenuItem("Show", null, Menu_Show_OnClick));
-            Tray.Notify.ContextMenuStrip.Items[0].Font = new Font(Tray.Notify.ContextMenuStrip.Items[0].Font, FontStyle.Bold);
-            Tray.Notify.ContextMenuStrip.Items.Add("-");
+            this.Notify.ContextMenuStrip = new ContextMenuStrip();
+            this.Notify.ContextMenuStrip.Items.Add(new ToolStripMenuItem("Show", null, Menu_Show_OnClick));
+            this.Notify.ContextMenuStrip.Items[0].Font = new Font(this.Notify.ContextMenuStrip.Items[0].Font, FontStyle.Bold);
+            this.Notify.ContextMenuStrip.Items.Add("-");
 
             bool needsSeparator = false;
             foreach (var serviceName in Settings.ServiceNames) {
@@ -41,25 +46,40 @@ namespace Seobiseu {
                     parent.DropDownItems.Add(new ToolStripMenuItem("Stop", Seobiseu.Properties.Resources.mnuStop_16, Menu_ServiceStop_OnClick) { Tag = item.ServiceName });
                     parent.Tag = new object[] { item.ServiceName, parent.DropDownItems[0], parent.DropDownItems[1], parent.DropDownItems[2] };
                     parent.DropDownOpening += new EventHandler(Menu_Service_DropDownOpening);
-                    Tray.Notify.ContextMenuStrip.Items.Add(parent);
-                    Tray.Notify.ContextMenuStrip.Opening += new CancelEventHandler(Menu_Opening);
+                    this.Notify.ContextMenuStrip.Items.Add(parent);
+                    this.Notify.ContextMenuStrip.Opening += new CancelEventHandler(Menu_Opening);
                 }
                 needsSeparator = true;
             }
 
-            if (needsSeparator) { Tray.Notify.ContextMenuStrip.Items.Add("-"); }
-            Tray.Notify.ContextMenuStrip.Items.Add(new ToolStripMenuItem("Exit", null, Menu_Exit_OnClick));
+            if (needsSeparator) { this.Notify.ContextMenuStrip.Items.Add("-"); }
+            this.Notify.ContextMenuStrip.Items.Add(new ToolStripMenuItem("Exit", null, Menu_Exit_OnClick));
         }
 
-        internal static void Hide() {
-            if (Tray.Notify != null) {
-                Tray.Notify.Visible = false;
+        internal void HideIcon() {
+            if (this.Notify != null) {
+                this.Notify.Visible = false;
             }
         }
 
+        internal void ShowForm() {
+            if ((this.Form == null) || (this.Form.IsDisposed)) { this.Form = new MainForm(); }
+            if (this.Form.IsHandleCreated == false) {
+                this.Form.CreateControl();
+                this.Form.Handle.GetType();
+            }
+            this.Form.Show();
+            if (this.Form.WindowState == FormWindowState.Minimized) { this.Form.WindowState = FormWindowState.Normal; }
+            this.Form.Activate();
+        }
 
-        private static void Menu_Opening(object sender, System.ComponentModel.CancelEventArgs e) {
-            foreach (ToolStripItem item in Tray.Notify.ContextMenuStrip.Items) {
+        internal void CancelForm() {
+            this.Form = null;
+        }
+
+
+        private void Menu_Opening(object sender, System.ComponentModel.CancelEventArgs e) {
+            foreach (ToolStripItem item in this.Notify.ContextMenuStrip.Items) {
                 var state = item.Tag as object[];
                 if (state != null) {
                     var serviceName = (string)state[0];
@@ -71,14 +91,12 @@ namespace Seobiseu {
             }
         }
 
-        private static void Menu_Show_OnClick(object sender, EventArgs e) {
-            if ((App.MainForm == null) || (App.MainForm.IsDisposed)) { App.MainForm = new MainForm(); }
-            App.MainForm.Show();
-            App.MainForm.Activate();
+        private void Menu_Show_OnClick(object sender, EventArgs e) {
+            this.ShowForm();
         }
 
 
-        static void Menu_Service_DropDownOpening(object sender, EventArgs e) {
+        private void Menu_Service_DropDownOpening(object sender, EventArgs e) {
             var itemParent = (ToolStripMenuItem)sender;
             var state = itemParent.Tag as object[];
             if (state != null) {
@@ -94,30 +112,42 @@ namespace Seobiseu {
             }
         }
 
-        private static void Menu_ServiceStart_OnClick(object sender, EventArgs e) {
+        private void Menu_ServiceStart_OnClick(object sender, EventArgs e) {
             var serviceName = ((ToolStripMenuItem)sender).Tag as string;
-            Transfer.Send(new Transfer("Start", serviceName));
+            try {
+                Transfer.Send(new Transfer("Start", serviceName));
+            } catch (Win32Exception ex) {
+                Medo.MessageBox.ShowError(null, "Cannot contact Seobiseu service.\n\n" + ex.Message);
+            }
         }
 
-        private static void Menu_ServiceRestart_OnClick(object sender, EventArgs e) {
+        private void Menu_ServiceRestart_OnClick(object sender, EventArgs e) {
             var serviceName = ((ToolStripMenuItem)sender).Tag as string;
             var bw = new BackgroundWorker();
-            bw.DoWork += new DoWorkEventHandler(delegate(object sender2, DoWorkEventArgs e2) {
-                Transfer.Send(new Transfer("Stop", serviceName));
-                using (var service = new ServiceController(serviceName)) {
-                    service.WaitForStatus(ServiceControllerStatus.Stopped, new TimeSpan(0, 5, 0));
+            bw.DoWork += new DoWorkEventHandler(delegate (object sender2, DoWorkEventArgs e2) {
+                try {
+                    Transfer.Send(new Transfer("Stop", serviceName));
+                    using (var service = new ServiceController(serviceName)) {
+                        service.WaitForStatus(ServiceControllerStatus.Stopped, new TimeSpan(0, 5, 0));
+                    }
+                    Transfer.Send(new Transfer("Start", serviceName));
+                } catch (Win32Exception ex) {
+                    Medo.MessageBox.ShowError(null, "Cannot contact Seobiseu service.\n\n" + ex.Message);
                 }
-                Transfer.Send(new Transfer("Start", serviceName));
             });
             bw.RunWorkerAsync();
         }
 
-        private static void Menu_ServiceStop_OnClick(object sender, EventArgs e) {
+        private void Menu_ServiceStop_OnClick(object sender, EventArgs e) {
             var serviceName = ((ToolStripMenuItem)sender).Tag as string;
-            Transfer.Send(new Transfer("Stop", serviceName));
+            try {
+                Transfer.Send(new Transfer("Stop", serviceName));
+            } catch (Win32Exception ex) {
+                Medo.MessageBox.ShowError(null, "Cannot contact Seobiseu service.\n\n" + ex.Message);
+            }
         }
 
-        private static void Menu_Exit_OnClick(object sender, EventArgs e) {
+        private void Menu_Exit_OnClick(object sender, EventArgs e) {
             Application.Exit();
         }
 

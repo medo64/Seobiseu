@@ -10,8 +10,8 @@ using System.Windows.Forms;
 namespace Seobiseu {
     internal static class App {
 
-        public static MainForm MainForm = null;
         public static Form ThreadProxyForm = null;
+        public static TrayContext TrayContext = null;
 
         [STAThread]
         static void Main() {
@@ -46,18 +46,15 @@ namespace Seobiseu {
                 }
                 Medo.Application.SingleInstance.Attach();
 
-
-                if (Settings.UseNotificationArea) {
-                    Tray.Show();
-                }
+                TrayContext = new TrayContext();
+                if (Settings.UseNotificationArea) { TrayContext.ShowIcon(); }
 
                 if (Medo.Application.Args.Current.ContainsKey("tray") == false) {
-                    App.MainForm = new MainForm();
-                    App.MainForm.Show();
+                    TrayContext.ShowForm();
                 }
 
-                Application.Run();
-                Tray.Hide();
+                Application.Run(TrayContext);
+                TrayContext.HideIcon();
             }
         }
 
@@ -82,15 +79,9 @@ namespace Seobiseu {
         private delegate void NewInstanceDetectedProcDelegate();
 
         private static void NewInstanceDetectedProc() {
-            if (App.MainForm == null) { App.MainForm = new MainForm(); }
-            if (App.MainForm.IsHandleCreated == false) {
-                App.MainForm.CreateControl();
-                App.MainForm.Handle.GetType();
+            if (App.TrayContext != null) {
+                App.TrayContext.ShowForm();
             }
-
-            App.MainForm.Show();
-            if (App.MainForm.WindowState == FormWindowState.Minimized) { App.MainForm.WindowState = FormWindowState.Normal; }
-            App.MainForm.Activate();
         }
 
 

@@ -127,7 +127,7 @@
     </Compile>
     <Compile Include="ServiceItem.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="Tray.cs" />
+    <Compile Include="TrayContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\App.manifest">

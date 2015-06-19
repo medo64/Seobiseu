@@ -28,44 +28,56 @@ namespace Seobiseu {
 
         private void Form_KeyDown(object sender, KeyEventArgs e) {
             switch (e.KeyData) {
-                case Keys.Alt | Keys.Menu: {
+                case Keys.Alt | Keys.Menu:
+                    {
                         mnu.Select();
                         mnuStart.Select();
                         e.Handled = true;
                         e.SuppressKeyPress = true;
-                    } break;
+                    }
+                    break;
 
-                case Keys.Escape: {
+                case Keys.Escape:
+                    {
                         if (Settings.UseNotificationArea) {
                             this.Close();
                             e.Handled = true;
                             e.SuppressKeyPress = true;
                         }
-                    } break;
+                    }
+                    break;
 
-                case Keys.F5: {
+                case Keys.F5:
+                    {
                         mnuStart_Click(null, null);
                         e.Handled = true;
                         e.SuppressKeyPress = true;
-                    } break;
+                    }
+                    break;
 
-                case Keys.Shift | Keys.F5: {
+                case Keys.Shift | Keys.F5:
+                    {
                         mnuStop_Click(null, null);
                         e.Handled = true;
                         e.SuppressKeyPress = true;
-                    } break;
+                    }
+                    break;
 
-                case Keys.Insert: {
+                case Keys.Insert:
+                    {
                         mnuAdd_Click(null, null);
                         e.Handled = true;
                         e.SuppressKeyPress = true;
-                    } break;
+                    }
+                    break;
 
-                case Keys.Delete: {
+                case Keys.Delete:
+                    {
                         mnuRemove_Click(null, null);
                         e.Handled = true;
                         e.SuppressKeyPress = true;
-                    } break;
+                    }
+                    break;
 
             }
         }
@@ -74,8 +86,8 @@ namespace Seobiseu {
             bwServicesUpdate.RunWorkerAsync();
         }
 
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
-            App.MainForm = null;
+        private void Form_FormClosing(object sender, FormClosingEventArgs e) {
+            App.TrayContext.CancelForm();
             bwServicesUpdate.CancelAsync();
             this.AllowedRefreshEvent.Set();
         }
@@ -98,21 +110,29 @@ namespace Seobiseu {
         private void mnuStart_Click(object sender, EventArgs e) {
             if (lsvServices.SelectedItems.Count > 0) {
                 var serviceName = ((ServiceItem)lsvServices.SelectedItems[0].Tag).ServiceName;
-                Transfer.Send(new Transfer("Start", serviceName));
+                try {
+                    Transfer.Send(new Transfer("Start", serviceName));
+                } catch (Win32Exception ex) {
+                    Medo.MessageBox.ShowError(this, "Cannot contact Seobiseu service.\n\n" + ex.Message);
+                }
             }
         }
 
         private void mnuStop_Click(object sender, EventArgs e) {
             if (lsvServices.SelectedItems.Count > 0) {
                 var serviceName = ((ServiceItem)lsvServices.SelectedItems[0].Tag).ServiceName;
-                Transfer.Send(new Transfer("Stop", serviceName));
+                try {
+                    Transfer.Send(new Transfer("Stop", serviceName));
+                } catch (Win32Exception ex) {
+                    Medo.MessageBox.ShowError(this, "Cannot contact Seobiseu service.\n\n" + ex.Message);
+                }
             }
         }
 
         private void mnuAdd_Click(object sender, EventArgs e) {
             using (var frm = new AddServiceForm()) {
                 if (frm.ShowDialog(this) == DialogResult.OK) {
-                    Tray.UpdateContextMenu();
+                    App.TrayContext.UpdateContextMenu();
                 }
             }
         }
@@ -128,7 +148,7 @@ namespace Seobiseu {
                     }
                 }
                 Settings.ServiceNames = serviceNames.ToArray();
-                Tray.UpdateContextMenu();
+                App.TrayContext.UpdateContextMenu();
             }
         }
 
@@ -165,12 +185,16 @@ namespace Seobiseu {
             if (lsvServices.SelectedItems.Count > 0) {
                 var serviceName = ((ServiceItem)lsvServices.SelectedItems[0].Tag).ServiceName;
                 var bw = new BackgroundWorker();
-                bw.DoWork += new DoWorkEventHandler(delegate(object sender2, DoWorkEventArgs e2) {
-                    Transfer.Send(new Transfer("Stop", serviceName));
-                    using (var service = new ServiceController(serviceName)) {
-                        service.WaitForStatus(ServiceControllerStatus.Stopped, new TimeSpan(0, 5, 0));
+                bw.DoWork += new DoWorkEventHandler(delegate (object sender2, DoWorkEventArgs e2) {
+                    try {
+                        Transfer.Send(new Transfer("Stop", serviceName));
+                        using (var service = new ServiceController(serviceName)) {
+                            service.WaitForStatus(ServiceControllerStatus.Stopped, new TimeSpan(0, 5, 0));
+                        }
+                        Transfer.Send(new Transfer("Start", serviceName));
+                    } catch (Win32Exception ex) {
+                        Medo.MessageBox.ShowError(this, "Cannot contact Seobiseu service.\n\n" + ex.Message);
                     }
-                    Transfer.Send(new Transfer("Start", serviceName));
                 });
                 bw.RunWorkerAsync();
             }
@@ -346,7 +370,7 @@ namespace Seobiseu {
                 serviceNames.Add(serviceName);
             }
             Settings.ServiceNames = serviceNames.ToArray();
-            Tray.UpdateContextMenu();
+            App.TrayContext.UpdateContextMenu();
 
             this.AllowedRefreshEvent.Set(); //to allow updates after drag
         }
