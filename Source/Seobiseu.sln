@@ -1,5 +1,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
+# Visual Studio 14
+VisualStudioVersion = 14.0.22823.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Seobiseu", "Seobiseu\Seobiseu.csproj", "{D2D5AD5A-1295-45D9-8100-40B499121EE1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Seobiseu-Service", "Seobiseu-Service\Seobiseu-Service.csproj", "{8CF56067-0F14-4485-B196-7C77F57AEF68}"
