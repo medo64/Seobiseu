@@ -331,9 +331,6 @@ namespace Seobiseu {
         private System.Windows.Forms.ColumnHeader lsvServices_colDisplayName;
         private System.Windows.Forms.ToolStrip mnu;
         private System.Windows.Forms.ToolStripButton mnuStart;
-        private System.Windows.Forms.ToolStripButton mnuAbout;
-        private System.Windows.Forms.ToolStripButton mnuReportABug;
-        private System.Windows.Forms.ToolStripButton mnuOptions;
         private System.Windows.Forms.ToolStripButton mnuStop;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton mnuAdd;
