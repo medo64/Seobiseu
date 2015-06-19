@@ -19,7 +19,11 @@ namespace Seobiseu {
                 this.Notify.Dispose();
             }
             this.Notify = new NotifyIcon();
-            this.Notify.Icon = GetApplicationIcon();
+            if ((Environment.OSVersion.Platform == PlatformID.Win32NT) && (Environment.OSVersion.Version.Major >= 10)) {
+                this.Notify.Icon = Seobiseu.Properties.Resources.TrayIcon_White;
+            } else {
+                this.Notify.Icon = Seobiseu.Properties.Resources.TrayIcon_Color;
+            }
             this.Notify.Text = "Seobiseu";
             this.Notify.Visible = true;
 
@@ -150,37 +154,6 @@ namespace Seobiseu {
         private void Menu_Exit_OnClick(object sender, EventArgs e) {
             Application.Exit();
         }
-
-
-
-        #region Helpers
-
-        private static Icon GetApplicationIcon() {
-            IntPtr hLibrary = NativeMethods.LoadLibrary(Assembly.GetEntryAssembly().Location);
-            if (!hLibrary.Equals(IntPtr.Zero)) {
-                IntPtr hIcon = NativeMethods.LoadImage(hLibrary, "#32512", NativeMethods.IMAGE_ICON, 20, 20, 0);
-                if (!hIcon.Equals(System.IntPtr.Zero)) {
-                    Icon icon = Icon.FromHandle(hIcon);
-                    if (icon != null) { return icon; }
-                }
-            }
-            return null;
-        }
-
-        private static class NativeMethods {
-
-            public const UInt32 IMAGE_ICON = 1;
-
-
-            [DllImport("user32.dll", CharSet = CharSet.Unicode)]
-            static extern internal IntPtr LoadImage(IntPtr hInstance, String lpIconName, UInt32 uType, Int32 cxDesired, Int32 cyDesired, UInt32 fuLoad);
-
-            [DllImport("kernel32.dll", CharSet = CharSet.Unicode)]
-            static extern internal IntPtr LoadLibrary(string lpFileName);
-
-        }
-
-        #endregion
 
     }
 }
