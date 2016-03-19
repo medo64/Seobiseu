@@ -159,11 +159,11 @@ namespace Seobiseu {
         }
 
         private void mnuAppFeedback_Click(object sender, EventArgs e) {
-            Medo.Diagnostics.ErrorReport.ShowDialog(this, null, new Uri("http://jmedved.com/feedback/"));
+            Medo.Diagnostics.ErrorReport.ShowDialog(this, null, new Uri("https://medo64.com/feedback/"));
         }
 
         private void mnuAppAbout_Click(object sender, EventArgs e) {
-            Medo.Windows.Forms.AboutBox.ShowDialog(this, new Uri("http://www.jmedved.com/seobiseu/"));
+            Medo.Windows.Forms.AboutBox.ShowDialog(this, new Uri("https://www.medo64.com/seobiseu/"));
         }
 
 
