@@ -35,7 +35,6 @@ AlwaysShowComponentsList=no
 ArchitecturesInstallIn64BitMode=x64
 DisableProgramGroupPage=yes
 MergeDuplicateFiles=yes
-MinVersion=0,5.1
 PrivilegesRequired=admin
 ShowLanguageDialog=no
 SolidCompression=yes
